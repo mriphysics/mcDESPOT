@@ -1,0 +1,42 @@
+clear all
+
+TR_SPGR = 5.2e-3; TR_SSFP = 5.2e-3; % [4.8 and 5.6]
+FA_SPGR = deg2rad([3 4 5 6 7 9 13 18]); 
+FA_SSFP = deg2rad([2 5 10 15 20 30 40 50]);
+T1_S = 1.15; 
+T2_S = 0.08; 
+T1_F = 0.4; 
+T2_F = 0.02; 
+M0_F = 0.25; 
+M0_S = 0.55;
+k_FS = 9; 
+T1_B = 1;
+T2_B = 8e-6; 
+M0_B = 0.2;
+k_SB = 5;
+k_FB = 5; 
+
+
+
+% GT-signals. dMzB = 0 for steady-state sequences.
+SPGR_Data = CS_SPGR_steady_state_MT_M0(FA_SPGR,TR_SPGR,'T1_S',T1_S,'T1_F',T1_F,'T1_B',T1_B,'M0_B',M0_B,'M0_F',M0_F,'M0_S',M0_S,'k_FS',k_FS,'k_SB',k_SB,'k_FB',k_FB);
+SSFP_Data = CS_SSFP_steady_state_MT_M0(FA_SSFP,TR_SSFP,'T1_S',T1_S,'T2_S',T2_S,'T1_F',T1_F,'T2_F',T2_F,'T1_B',T1_B,'M0_B',M0_B,'M0_F',M0_F,'M0_S',M0_S,'k_FS',k_FS,'k_SB',k_SB,'k_FB',k_FB);
+SSFP_Data_180 = CS_SSFP_steady_state_180_MT_M0(FA_SSFP,TR_SSFP,'T1_S',T1_S,'T2_S',T2_S,'T1_F',T1_F,'T2_F',T2_F,'T1_B',T1_B,'M0_B',M0_B,'M0_F',M0_F,'M0_S',M0_S,'k_FS',k_FS,'k_SB',k_SB,'k_FB',k_FB);
+Data = [SPGR_Data ; SSFP_Data_180; SSFP_Data];
+
+
+nSamples = 500;
+downsample = 100;
+Runs = 1;
+sigma = 0.02;
+
+Start = [T1S_Prediction T1F_Prediction M0F_Prediction M0S_Prediction kFS_Prediction kSF_Prediction T2_S T2_F];
+
+Scale = sigma*1e-1*diag([1 1 1 1 5 5 0.2 0.1]);
+Proprng = @(x)mvnrnd(x,Scale,1);
+
+% Perform MHM.
+[Smpl_All(:,:,ii),Rate] = mhsample(Start, nSamples,'logpdf',logpdf,'proprnd',Proprng,'symmetric',true, 'thin', downsample);
+Rate
+
+    
