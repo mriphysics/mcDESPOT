@@ -1,0 +1,129 @@
+%% Heat map analysis and plots.
+
+LineSettings = ['w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', 'w', ];
+%cm = colormap(cool(4));
+
+% Bounds Order: T1S_LB, T1S_UB, T1F_LB, T1F_UB, T2S_LB, T2S_UB, T2F_LB, T2F_UB, M0F_LB, M0F_UB, kFS_LB, kFS_UB;
+% T1S_LB = Bounds(:,1); T1S_UB = Bounds(:,2); T1F_LB = Bounds(:,3); T1F_UB = Bounds(:,4);
+% T2S_LB = Bounds(:,5); T2S_UB = Bounds(:,6); T2F_LB = Bounds(:,7); T2F_UB = Bounds(:,8);
+% M0F_LB = Bounds(:,9); M0F_UB = Bounds(:,10); %kFS_LB = Bounds(:,11); kFS_UB = Bounds(:,12);
+
+figure(3); subplot(2,3,1);
+MeanCF_T1 = mean(exp(P_T1),3); MaxCF_T1 = max(exp(P_T1),[],3);
+imagesc([min(T1F_Vector) max(T1F_Vector)],[min(T1S_Vector) max(T1S_Vector)],MaxCF_T1); colormap(viridis); colorbar; shading interp; xlabel('T_{1F} (s)','FontSize',12); ylabel('T_{1S} (s)','FontSize',12); hold on;
+% for rr = 1:length(T1S_LB)
+%     rectangle('Position',[T1F_LB(rr) T1S_LB(rr) (T1F_UB(rr)-T1F_LB(rr)) (T1S_UB(rr)-T1S_LB(rr))],'EdgeColor',LineSettings(rr),'LineWidth',1)
+% end
+% for ss = 1:size(Subsets,1)
+%     plot(Subsets(ss,2),Subsets(ss,1),'m+','LineWidth',1)
+% end
+% plot(Solution_Bouhrara(:,2), Solution_Bouhrara(:,1), '.', 'Color',cm(1,:), 'MarkerSize', 5); 
+% plot(Solution_Deoni(:,2), Solution_Deoni(:,1), '.','Color', cm(2,:), 'MarkerSize', 5); 
+% plot(Solution_Wood(:,2), Solution_Wood(:,1), '.','Color', cm(3,:), 'MarkerSize', 5); 
+% plot(Solution_Zhang(:,2), Solution_Zhang(:,1), '.','Color', cm(4,:), 'MarkerSize', 5); 
+plot(T1_F,T1_S,'r.', 'MarkerSize', 20);
+
+subplot(2,3,2);
+MeanCF_T2 = mean(exp(P_T2),3); MaxCF_T2 = max(exp(P_T2),[],3);
+imagesc([min(T2F_Vector) max(T2F_Vector)],[min(T2S_Vector) max(T2S_Vector)],MaxCF_T2); colormap(viridis); colorbar; shading interp; xlabel('T_{2F} (s)','FontSize',12); ylabel('T_{2S} (s)','FontSize',12); hold on;
+% for rr = 1:length(T1S_LB)
+%     rectangle('Position',[T2F_LB(rr) T2S_LB(rr) (T2F_UB(rr)-T2F_LB(rr)) (T2S_UB(rr)-T2S_LB(rr))],'EdgeColor',LineSettings(rr),'LineWidth',1)
+% end
+% for ss = 1:size(Subsets,1)
+%     plot(Subsets(ss,4),Subsets(ss,3),'m+','LineWidth',1)
+% end
+% plot(Solution_Bouhrara(:,4), Solution_Bouhrara(:,3), '.','Color', cm(1,:), 'MarkerSize', 5); 
+% plot(Solution_Deoni(:,4), Solution_Deoni(:,3), '.','Color', cm(2,:), 'MarkerSize', 5); 
+% plot(Solution_Wood(:,4), Solution_Wood(:,3), '.','Color', cm(3,:), 'MarkerSize', 5); 
+% plot(Solution_Zhang(:,4), Solution_Zhang(:,3), '.','Color', cm(4,:), 'MarkerSize', 5); 
+plot(T2_F,T2_S,'r.', 'MarkerSize', 20);
+
+% subplot(3,3,3)
+% MeanCF_kFS = mean(exp(P_kFS),3); MaxCF_kFS = max(exp(P_kFS),[],3);
+% imagesc([min(kFS_Vector) max(kFS_Vector)],[min(M0F_Vector) max(M0F_Vector)],MaxCF_kFS); colormap(gray); colorbar; shading interp; xlabel('k_{FS} (s^{-1})','FontSize',12); ylabel('M_{0F}','FontSize',12); hold on;
+% for rr = 1:length(T1S_LB)
+%     rectangle('Position',[kFS_LB(rr) M0F_LB(rr) (kFS_UB(rr)-kFS_LB(rr)) (M0F_UB(rr)-M0F_LB(rr))],'EdgeColor',LineSettings(rr),'LineWidth',1)
+% end
+% for ss = 1:size(Subsets,1)
+%     plot(Subsets(ss,6),Subsets(ss,5),'m+','LineWidth',1)
+% end
+% % plot(Solution_Bouhrara(:,6), Solution_Bouhrara(:,5), '.','Color', cm(1,:), 'MarkerSize', 5); 
+% % plot(Solution_Deoni(:,6), Solution_Deoni(:,5), '.','Color', cm(2,:), 'MarkerSize', 5); 
+% % plot(Solution_Wood(:,6), Solution_Wood(:,5), '.','Color', cm(3,:), 'MarkerSize', 5); 
+% % plot(Solution_Zhang(:,6), Solution_Zhang(:,5), '.','Color', cm(4,:), 'MarkerSize', 5); 
+% % plot(k_FS,M0_F,'r.', 'MarkerSize', 20);
+
+subplot(2,3,3);
+MeanCF_T1F = mean(exp(P_T1F),3); MaxCF_T1F = max(exp(P_T1F),[],3);
+imagesc([min(M0F_Vector) max(M0F_Vector)],[min(T1F_Vector) max(T1F_Vector)],MaxCF_T1F); colormap(viridis); colorbar; shading interp; xlabel('M_{0F}','FontSize',12); ylabel('T_{1F} (s)','FontSize',12); hold on;
+% for rr = 1:length(T1S_LB)
+%     rectangle('Position',[M0F_LB(rr) T1F_LB(rr) (M0F_UB(rr)-M0F_LB(rr)) (T1F_UB(rr)-T1F_LB(rr))],'EdgeColor',LineSettings(rr),'LineWidth',1)
+% end
+% for ss = 1:size(Subsets,1)
+%     plot(Subsets(ss,5),Subsets(ss,2),'m+','LineWidth',1)
+% end
+% plot(Solution_Bouhrara(:,5), Solution_Bouhrara(:,2), '.','Color', cm(1,:), 'MarkerSize', 5); 
+% plot(Solution_Deoni(:,5), Solution_Deoni(:,2), '.','Color', cm(2,:), 'MarkerSize', 5); 
+% plot(Solution_Wood(:,5), Solution_Wood(:,2), '.','Color', cm(3,:), 'MarkerSize', 5); 
+% plot(Solution_Zhang(:,5), Solution_Zhang(:,2), '.','Color', cm(4,:), 'MarkerSize', 5); 
+plot(M0_F,T1_F,'r.', 'MarkerSize', 20);
+
+subplot(2,3,4);
+MeanCF_T1S = mean(exp(P_T1S),3); MaxCF_T1S = max(exp(P_T1S),[],3);
+imagesc([min(M0F_Vector) max(M0F_Vector)],[min(T1S_Vector) max(T1S_Vector)],MaxCF_T1S); colormap(viridis); colorbar; shading interp; xlabel('M_{0F}','FontSize',12); ylabel('T_{1S} (s)','FontSize',12); hold on;
+% for rr = 1:length(T1S_LB)
+%     rectangle('Position',[M0F_LB(rr) T1S_LB(rr) (M0F_UB(rr)-M0F_LB(rr)) (T1S_UB(rr)-T1S_LB(rr))],'EdgeColor',LineSettings(rr),'LineWidth',1)
+% end
+% for ss = 1:size(Subsets,1)
+%     plot(Subsets(ss,5),Subsets(ss,1),'m+','LineWidth',1)
+% end
+% plot(Solution_Bouhrara(:,5), Solution_Bouhrara(:,1), '.','Color', cm(1,:), 'MarkerSize', 5); 
+% plot(Solution_Deoni(:,5), Solution_Deoni(:,1), '.','Color', cm(2,:), 'MarkerSize', 5);
+% plot(Solution_Wood(:,5), Solution_Wood(:,1), '.','Color', cm(3,:), 'MarkerSize', 5); 
+% plot(Solution_Zhang(:,5), Solution_Zhang(:,1), '.','Color', cm(4,:), 'MarkerSize', 5); 
+plot(M0_F,T1_S,'r.', 'MarkerSize', 20);
+
+subplot(2,3,5);
+MeanCF_T2F = mean(exp(P_T2F),3); MaxCF_T2F = max(exp(P_T2F),[],3);
+imagesc([min(T2F_Vector) max(T2F_Vector)],[min(M0F_Vector) max(M0F_Vector)],MaxCF_T2F); colormap(viridis); colorbar; shading interp; xlabel('T_{2F} (s)','FontSize',12); ylabel('M_{0F}','FontSize',12); hold on;
+% for rr = 1:length(T1S_LB)
+%     rectangle('Position',[T2F_LB(rr) M0F_LB(rr) (T2F_UB(rr)-T2F_LB(rr)) (M0F_UB(rr)-M0F_LB(rr))],'EdgeColor',LineSettings(rr),'LineWidth',1)
+% end
+% for ss = 1:size(Subsets,1)
+%     plot(Subsets(ss,4),Subsets(ss,5),'m+','LineWidth',1)
+% end
+% plot(Solution_Bouhrara(:,4), Solution_Bouhrara(:,5), '.','Color', cm(1,:), 'MarkerSize', 5); 
+% plot(Solution_Deoni(:,4), Solution_Deoni(:,5), '.','Color', cm(2,:), 'MarkerSize', 5); 
+% plot(Solution_Wood(:,4), Solution_Wood(:,5), '.','Color', cm(3,:), 'MarkerSize', 5); 
+% plot(Solution_Zhang(:,4), Solution_Zhang(:,5), '.','Color', cm(4,:), 'MarkerSize', 5); 
+plot(T2_F,M0_F,'r.', 'MarkerSize', 20);
+
+subplot(2,3,6);
+MeanCF_T2S = mean(exp(P_T2S),3); MaxCF_T2S = max(exp(P_T2S),[],3);
+imagesc([min(T2S_Vector) max(T2S_Vector)],[min(M0F_Vector) max(M0F_Vector)],MaxCF_T2S); colormap(viridis); colorbar; shading interp; xlabel('T_{2S} (s)','FontSize',12); ylabel('M_{0F}','FontSize',12); hold on;
+% for rr = 1:length(T1S_LB)
+%     rectangle('Position',[T2S_LB(rr) M0F_LB(rr) (T2S_UB(rr)-T2S_LB(rr)) (M0F_UB(rr)-M0F_LB(rr))],'EdgeColor',LineSettings(rr),'LineWidth',1)
+% end
+% for ss = 1:size(Subsets,1)
+%     plot(Subsets(ss,3),Subsets(ss,5),'m+','LineWidth',1)
+% end
+% plot(Solution_Bouhrara(:,3), Solution_Bouhrara(:,5), '.','Color', cm(1,:), 'MarkerSize', 5); 
+% plot(Solution_Deoni(:,3), Solution_Deoni(:,5), '.','Color', cm(2,:), 'MarkerSize', 5); 
+% plot(Solution_Wood(:,3), Solution_Wood(:,5), '.','Color', cm(3,:), 'MarkerSize', 5); 
+% plot(Solution_Zhang(:,3), Solution_Zhang(:,5), '.','Color', cm(4,:), 'MarkerSize', 5); 
+plot(T2_S,M0_F,'r.', 'MarkerSize', 20);
+
+%% Outtakes.
+
+% TR plots.
+% cm = colormap(magma(4));
+% for ii = 1:length(TR_SSFP)
+%     plot(rad2deg(FA_SSFP0_D), SSFP_Data_0_D(ii,:), 'o', 'Color', cm(1,:), 'LineWidth', 2); hold on; 
+%     plot(rad2deg(FA_SSFP0_M), SSFP_Data_0_M(ii,:), '-', 'Color', cm(2,:), 'LineWidth', 2); hold on;
+%     plot(rad2deg(FA_SSFP0_M), SSFP_Data_0_ME(ii,:), '--', 'Color', cm(3,:), 'LineWidth', 2); hold on;
+%     
+%     if ii == 1
+%         ll = legend('Default Scheme','Modified Scheme','Modified Scheme + Exchange'); ll.FontSize = 12; ll.AutoUpdate = 'off'; 
+%     end
+%     
+% end
