@@ -1,3 +1,10 @@
+%%% Steady-state bSSFP solution for single-pool.
+%       Inputs: FA: Flip angle array (radians).
+%               TR: Repetition time (seconds).
+%               PC: Phase-cycling increment (e.g. 0 or pi).
+%               Model parameter values (all in SI).
+%       Outpus: Mss: Signal vector.
+
 function Mss_Sig = SSFP_SP_SteadyState(FA, TR, PC, varargin)
 
 for ii = 1:length(varargin)

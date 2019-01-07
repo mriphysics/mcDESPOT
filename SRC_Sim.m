@@ -1,16 +1,29 @@
+%%% Runs stochastic region contraction WITH exchange + default bounds.
+% Inputs:
+%        Trials: No. of random parameter combinations/signal candidates per iteration.
+%        Iterations: No. of contraction steps.
+%        N: No. of top solutions to be selected per iteration.
+%        Runs: Functionality for multiple runs.
+%        FA_SPGR/FA_SSFP0/FA_SSFP180: FA vectors for mcDESPOT sequences in radians.
+%        TR_SPGR/TR_SSFP: Repetition times for mcDESPOT sequences in seconds.
+%        Data: Ground-truth data organised as column vector in the order: SPGR, bSSFP0, bSSFP180.
+% Outputs: 
+%        Sol: Solution vector containing estimated parameters with order:T1S, T1F, T2S, T2F, M0F, kFS.
+%        Bounds: Lower and upper bounds respectively, saved per iteration for model parameters in the same order as Sol.
+%        Subsets: Parameter values over which mean is taken on final iteration to yield final estimates.
+
 function [Sol, Bounds, Subsets] = SRC_Sim(Trials, Iterations, N, Runs, FA_SPGR, FA_SSFP0, FA_SSFP180, TR_SPGR, TR_SSFP, Data)
 Bounds = zeros(Iterations,12); Subsets = zeros(5,6);
 
 % Initialise loop variables.
-T1S_app = zeros(Runs,1); M0F_app = zeros(Runs,1); kFS_app = zeros(Runs,1); T2S_app = zeros(Runs,1); T1F_app = zeros(Runs,1); T2F_app = zeros(Runs,1); %Delta_app = zeros(Runs,1);
+T1S_app = zeros(Runs,1); M0F_app = zeros(Runs,1); kFS_app = zeros(Runs,1); T2S_app = zeros(Runs,1); T1F_app = zeros(Runs,1); T2F_app = zeros(Runs,1);
 
 Candidates = zeros((length(FA_SPGR) + length(FA_SSFP0) + length(FA_SSFP180)),Trials);
 Mss_SPGR = zeros(length(FA_SPGR),Trials); Mss_SSFP180 = zeros(length(FA_SSFP180),Trials); Mss_SSFP = zeros(length(FA_SSFP0),Trials);
-SSFP_Signals = zeros((length(FA_SSFP0)+length(FA_SSFP180)),Trials); SRSQ = zeros(Trials,1); %Flat_CF = ones(30,Trials);
+SSFP_Signals = zeros((length(FA_SSFP0)+length(FA_SSFP180)),Trials); SRSQ = zeros(Trials,1); 
 
 T1S_Sub = zeros(N,1); T1F_Sub = zeros(N,1); T2S_Sub = zeros(N,1); T2F_Sub = zeros(N,1); M0F_Sub = zeros(N,1); kFS_Sub = zeros(N,1);
 T1S_SRC = zeros(5,1); T1F_SRC = zeros(5,1); T2S_SRC = zeros(5,1); T2F_SRC = zeros(5,1); M0F_SRC = zeros(5,1); kFS_SRC = zeros(5,1);
-%Delta_Sub = zeros(N,1); Delta_SRC = zeros(5,1);
 
 T1S_LB = zeros(Iterations,1); T1S_UB = zeros(Iterations,1);
 T2S_LB = zeros(Iterations,1); T2S_UB = zeros(Iterations,1);
@@ -18,43 +31,22 @@ T1F_LB = zeros(Iterations,1); T1F_UB = zeros(Iterations,1);
 T2F_LB = zeros(Iterations,1); T2F_UB = zeros(Iterations,1);
 M0F_LB = zeros(Iterations,1); M0F_UB = zeros(Iterations,1);
 kFS_LB = zeros(Iterations,1); kFS_UB = zeros(Iterations,1);
-%Delta_LB = zeros(Iterations,1); Delta_UB = zeros(Iterations,1);
 
 for nn = 1:Runs
     
-    % Wood.
-    %T1S_LB(1) = 0.9; T1S_UB(1) = 1.5; T2S_LB(1) = 0.04; T2S_UB(1) = 0.15;
-    %T1F_LB(1) = 0.3; T1F_UB(1) = 0.8; T2F_LB(1) = 0.01; T2F_UB(1) = 0.03;
-    %M0F_LB(1) = 0.001; M0F_UB(1) = 0.35; kFS_LB(1) = (1/0.6); kFS_UB(1) = 40;
-    %Delta_LB(1) = 0; Delta_UB(1) = 2*pi;
-    % Zhang.
-    %T1S_LB(1) = 0.7; T1S_UB(1) = 2.5; T2S_LB(1) = 0.075; T2S_UB(1) = 0.2;
-    %T1F_LB(1) = 0.2; T1F_UB(1) = 0.5; T2F_LB(1) = 0.002; T2F_UB(1) = 0.045;
-    %M0F_LB(1) = 1e-7; M0F_UB(1) = 0.30; kFS_LB(1) = 0.5; kFS_UB(1) = 20;
-    %Delta_LB(1) = 0; Delta_UB(1) = 2*pi;
-    % Deoni (older assume same bounds for F & S RTs).
-    %T1F_LB(1) = 0.3; T1F_UB(1) = 0.65; T1S_LB(1) = 0.9; T1S_UB(1) = 5;
-    %T2F_LB(1) = 0.001; T2F_UB(1) = 0.03; T2S_LB(1) = 0.05; T2S_UB(1) = 0.165;
-    %M0F_LB(1) = 0; M0F_UB(1) = 0.35; kFS_LB(1) = (1/0.6); kFS_UB(1) = 40;
-    %Delta_LB(1) = 0; Delta_UB(1) = 2*pi;
-    % Bouhrara (2016).
+    % Default initial bound set from Bouhrara et al (with additional kFS limits).
     T1S_LB(1) = 0.8; T1S_UB(1) = 2; T2S_LB(1) = 0.06; T2S_UB(1) = 0.16;
     T1F_LB(1) = 0.2; T1F_UB(1) = 0.7; T2F_LB(1) = 0.002; T2F_UB(1) = 0.04;
     M0F_LB(1) = 0; M0F_UB(1) = 0.5; kFS_LB(1) = 0.5; kFS_UB(1) = 20;
-    %Delta_LB(1) = 0; Delta_UB(1) = 2*pi;
     
-    tic
     for it = 1:Iterations
-        
-        %disp(['Iteration ', num2str(it)])
-        
+               
         if it == 1
             
             % Randomly choose parameter values from uniform distribution.
             T1S_Pick = (T1S_UB(it) - T1S_LB(it)) .* rand(Trials,1) + T1S_LB(it); T2S_Pick = (T2S_UB(it) - T2S_LB(it)) .* rand(Trials,1) + T2S_LB(it);
             T1F_Pick = (T1F_UB(it) - T1F_LB(it)) .* rand(Trials,1) + T1F_LB(it); T2F_Pick = (T2F_UB(it) - T2F_LB(it)) .* rand(Trials,1) + T2F_LB(it);
             M0F_Pick = (M0F_UB(it) - M0F_LB(it)) .* rand(Trials,1) + M0F_LB(it); kFS_Pick = (kFS_UB(it) - kFS_LB(it)) .* rand(Trials,1) + kFS_LB(it);
-            %Delta_Pick = (Delta_UB(it) - Delta_LB(it)) .* rand(Trials,1) + Delta_LB(it);
             
         else
             
@@ -65,7 +57,6 @@ for nn = 1:Runs
             T2S_Pick = mean(T2S_Sub) + (std(T2S_Sub) .* trandn((((T2S_LB(it)*ones(Trials,1))-mean(T2S_Sub))./std(T2S_Sub)), (((T2S_UB(it)*ones(Trials,1))-mean(T2S_Sub))./std(T2S_Sub))));
             M0F_Pick = mean(M0F_Sub) + (std(M0F_Sub) .* trandn((((M0F_LB(it)*ones(Trials,1))-mean(M0F_Sub))./std(M0F_Sub)), (((M0F_UB(it)*ones(Trials,1))-mean(M0F_Sub))./std(M0F_Sub))));
             kFS_Pick = mean(kFS_Sub) + (std(kFS_Sub) .* trandn((((kFS_LB(it)*ones(Trials,1))-mean(kFS_Sub))./std(kFS_Sub)), (((kFS_UB(it)*ones(Trials,1))-mean(kFS_Sub))./std(kFS_Sub))));
-            %Delta_Pick = mean(Delta_Sub) + (std(Delta_Sub) .* trandn((((Delta_LB(it)*ones(Trials,1))-mean(Delta_Sub))./std(Delta_Sub)), (((Delta_UB(it)*ones(Trials,1))-mean(Delta_Sub))./std(Delta_Sub))));
             
         end
         
@@ -76,7 +67,7 @@ for nn = 1:Runs
             SSFP_Signals(:,qq) = [Mss_SSFP(:,qq); Mss_SSFP180(:,qq)];
 
             Candidates(:,qq) = [Mss_SPGR(:,qq)./mean(Mss_SPGR(:,qq)); SSFP_Signals(:,qq)./mean(SSFP_Signals(:,qq))];  
-            SRSQ(qq) = norm(Candidates(:,qq) - Data).^2; %SRSQ(qq) = norm(Flat_CF(:,qq)).^2;
+            SRSQ(qq) = norm(Candidates(:,qq) - Data).^2; 
             
         end
         
@@ -91,7 +82,6 @@ for nn = 1:Runs
                 T1S_Sub(pp) = T1S_Pick(Index(pp)); T1F_Sub(pp) = T1F_Pick(Index(pp));
                 T2S_Sub(pp) = T2S_Pick(Index(pp)); T2F_Sub(pp) = T2F_Pick(Index(pp));
                 M0F_Sub(pp) = M0F_Pick(Index(pp)); kFS_Sub(pp) = kFS_Pick(Index(pp));
-                %Delta_Sub(pp) = Delta_Pick(Index(pp));
                 
             end
             
@@ -99,13 +89,11 @@ for nn = 1:Runs
             T1S_LB(it+1) = min(T1S_Sub) ; T1S_UB(it+1) = max(T1S_Sub); T1F_LB(it+1) = min(T1F_Sub) ; T1F_UB(it+1) = max(T1F_Sub);
             T2S_LB(it+1) = min(T2S_Sub) ; T2S_UB(it+1) = max(T2S_Sub); T2F_LB(it+1) = min(T2F_Sub) ; T2F_UB(it+1) = max(T2F_Sub);
             M0F_LB(it+1) = min(M0F_Sub) ; M0F_UB(it+1) = max(M0F_Sub); kFS_LB(it+1) = min(kFS_Sub) ; kFS_UB(it+1) = max(kFS_Sub);
-            %Delta_LB(it+1) = min(Delta_Sub) ; Delta_UB(it+1) = max(Delta_Sub);
             
             % Expand search-space slightly to avoid 'inadvertent over-contraction'.
             T1S_expn = (T1S_UB(it+1) - T1S_LB(it+1))/N; T1F_expn = (T1F_UB(it+1) - T1F_LB(it+1))/N;
             T2S_expn = (T2S_UB(it+1) - T2S_LB(it+1))/N; T2F_expn = (T2F_UB(it+1) - T2F_LB(it+1))/N;
             M0F_expn = (M0F_UB(it+1) - M0F_LB(it+1))/N; kFS_expn = (kFS_UB(it+1) - kFS_LB(it+1))/N;
-            %Delta_expn = (Delta_UB(it+1) - Delta_LB(it+1))/N;
             
             T1S_LB(it+1) = T1S_LB(it+1) - T1S_expn; T1S_UB(it+1) = T1S_UB(it+1) + T1S_expn;
             T1F_LB(it+1) = T1F_LB(it+1) - T1F_expn; T1F_UB(it+1) = T1F_UB(it+1) + T1F_expn;
@@ -113,7 +101,6 @@ for nn = 1:Runs
             T2F_LB(it+1) = T2F_LB(it+1) - T2F_expn; T2F_UB(it+1) = T2F_UB(it+1) + T2F_expn;
             M0F_LB(it+1) = M0F_LB(it+1) - M0F_expn; M0F_UB(it+1) = M0F_UB(it+1) + M0F_expn;
             kFS_LB(it+1) = kFS_LB(it+1) - kFS_expn; kFS_UB(it+1) = kFS_UB(it+1) + kFS_expn;
-            %Delta_LB(it+1) = Delta_LB(it+1) - Delta_expn; Delta_UB(it+1) = Delta_UB(it+1) + Delta_expn;
             
             % Set lower bound to zero if less than zero after expansion.
             if T1S_LB(it+1) < 0
@@ -134,30 +121,25 @@ for nn = 1:Runs
             if kFS_LB(it+1) < 0
                 kFS_LB(it+1) = 0;
             end
-            %if Delta_LB(it+1) < 0
-            %    Delta_LB(it+1) = 0; 
-            %end
-            
-            if (((max(T1S_Sub)-min(T1S_Sub))/max(T1S_Sub)) < 0.01 && ((max(T1F_Sub)-min(T1F_Sub))/max(T1F_Sub)) < 0.01 && ((max(M0F_Sub)-min(M0F_Sub))/max(M0F_Sub)) < 0.01 && ((max(T2S_Sub)-min(T2S_Sub))/max(T2S_Sub)) < 0.01 && ((max(T2F_Sub)-min(T2F_Sub))/max(T2F_Sub)) < 0.01 && ((max(kFS_Sub)-min(kFS_Sub))/max(kFS_Sub)) < 0.01) % && ((max(Delta_Sub)-min(Delta_Sub))/max(Delta_Sub)) < 0.01 
+
+            if (((max(T1S_Sub)-min(T1S_Sub))/max(T1S_Sub)) < 0.01 && ((max(T1F_Sub)-min(T1F_Sub))/max(T1F_Sub)) < 0.01 && ((max(M0F_Sub)-min(M0F_Sub))/max(M0F_Sub)) < 0.01 && ((max(T2S_Sub)-min(T2S_Sub))/max(T2S_Sub)) < 0.01 && ((max(T2F_Sub)-min(T2F_Sub))/max(T2F_Sub)) < 0.01 && ((max(kFS_Sub)-min(kFS_Sub))/max(kFS_Sub)) < 0.01)
                break
             end
             
         end
         
     end
-    toc
+
     % Return result as mean of top-five solutions.
     for pp = 1:5
         T1S_SRC(pp) = T1S_Pick(Index(pp)); T1F_SRC(pp) = T1F_Pick(Index(pp));
         T2S_SRC(pp) = T2S_Pick(Index(pp)); T2F_SRC(pp) = T2F_Pick(Index(pp));
         M0F_SRC(pp) = M0F_Pick(Index(pp)); kFS_SRC(pp) = kFS_Pick(Index(pp));
-        %Delta_SRC(pp) = Delta_Pick(Index(pp));
     end
         
     T1S_app(nn) = mean(T1S_SRC); T1F_app(nn) = mean(T1F_SRC);
     T2S_app(nn) = mean(T2S_SRC); T2F_app(nn) = mean(T2F_SRC);
     M0F_app(nn) = mean(M0F_SRC); kFS_app(nn) = mean(kFS_SRC);
-    %Delta_app(nn) = mean(Delta_SRC);
     
 end
 

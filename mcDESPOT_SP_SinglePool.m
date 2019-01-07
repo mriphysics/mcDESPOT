@@ -1,4 +1,5 @@
-%% Performs heat map simulations.
+%%% Performs search space sampling using logpdf_SinglePool. Same format as
+%%% mcDESPOT_SP. Generates data needed for Figure 2a.
 
 close all; clear all;
 
@@ -10,27 +11,24 @@ nTrials = 200e6;
 P_All = zeros(nTrials,1);
 T1_Rand = zeros(nTrials,1); T2_Rand = zeros(nTrials,1); M0_Rand = zeros(nTrials,1);
 
-% Ground-truth signals for mcDESPOT.
+% Ground-truth signals.
 SPGR_Data = SPGR_SP_SteadyState(FA_SPGR, TR_SPGR,'T1',T1,'M0',M0);
 SSFP_Data_0 = SSFP_SP_SteadyState(FA_SSFP0, TR_SSFP, PC1,'T1',T1,'T2',T2,'M0',M0);
 SSFP_Data_180 = SSFP_SP_SteadyState(FA_SSFP180, TR_SSFP, PC2,'T1',T1,'T2',T2,'M0',M0);
 
-% Concatenate SSFP signals.
 SSFP_Data = [SSFP_Data_0 ; SSFP_Data_180];
 
-%% Direct sampling of cost-function in 2D.
+%% Perform search space sampling.
 
-SNR = 30; Sigma = mean(SPGR_Data)/SNR; % Depends on param set.
+SNR = 30; Sigma = mean(SPGR_Data)/SNR;
 
 Upper = [1.5 1.5 0.15]; Lower = [0.5 0.5 0.05];
 
 % Pre-normalisation.
 Data_O = [SPGR_Data ; SSFP_Data];
 
-for nn = 1:nTrials
-    
-    %disp(['nTrial: ', num2str(nn)])
-    
+for nn = 1:nTrials   
+   
     % Draw random parameter values from a uniform distribution.
     T1_Rand(nn) = (Upper(1) - Lower(1)) .* rand(1,1) + Lower(1);
     M0_Rand(nn) = (Upper(2) - Lower(2)) .* rand(1,1) + Lower(2);
@@ -42,12 +40,10 @@ end
 
 Exp_P_All = exp(P_All);
 
-%% Signal curve analysis.
+%% Isolate top solutions.
 
 PlottingNo = 1000;
-
 [Values, Indexes] = sort(Exp_P_All,'ascend');
 Idx_Picked = Indexes(nTrials-(PlottingNo-1):nTrials,1);
 T1_Picked = T1_Rand(Idx_Picked,1); T2_Picked = T2_Rand(Idx_Picked,1); M0_Picked = M0_Rand(Idx_Picked,1);
-
-Values_Top = Values(nTrials-(PlottingNo-1):nTrials,1); TSNE_Matrix = [T1_Picked, T2_Picked, M0_Picked];
+SP_Values_Top = Values(nTrials-(PlottingNo-1):nTrials,1); SP_kPCA_Matrix = [T1_Picked, T2_Picked, M0_Picked];

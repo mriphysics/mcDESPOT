@@ -1,3 +1,9 @@
+% Steady-state SPGR solution for single-pool.
+%       Inputs: FA: Flip angle array (radians).
+%               TR: Repetition time (seconds).
+%               Model parameter values (all in SI).
+%       Outpus: Mss: Signal vector.
+
 function Mss_Sig = SPGR_SP_SteadyState(FA, TR, varargin)
 
 for ii = 1:length(varargin)

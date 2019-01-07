@@ -1,4 +1,9 @@
-% Using matrix exponential approach from Liu (2015).
+%%% Steady-state bSSFP solution. Using matrix exponential approach from Liu et al. (2015).
+%       Inputs: FA: Flip angle array (radians).
+%               TR: Repetition time (seconds).
+%               PC: Phase-cycling increment (e.g. 0 or pi).
+%               Model parameter values (all in SI).
+%       Outpus: Mss: Signal vector.
 
 function Mss_Sig = SSFP_SteadyState(FA, TR, PC, varargin)
 
@@ -20,15 +25,9 @@ for ii = 1:length(varargin)
     if strcmpi(varargin{ii},'M0_F')
         M0_F = varargin{ii+1};
     end
-%     if strcmpi(varargin{ii},'M0_S')
-%         M0_S = varargin{ii+1};
-%     end
     if strcmpi(varargin{ii},'k_FS')
         k_FS = varargin{ii+1};
     end
-%     if strcmpi(varargin{ii},'k_SF')
-%         k_SF = varargin{ii+1};
-%     end
 
 end
 
