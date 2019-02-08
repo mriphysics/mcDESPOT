@@ -10,6 +10,7 @@ noise = 'on';
 
 switch exchange
     case 'on'
+        Params = 6;
         switch tissuetype
             case 'HB'
                 T1_F = 0.45; T1_S = 1.4; T2_F = 0.015; T2_S = 0.09; M0_F = 0.15; k_FS = 8; Delta = 0; PC1 = 0 + Delta; PC2 = pi + Delta;
@@ -21,6 +22,7 @@ switch exchange
                 T1_S = 1.3; T1_F = 0.45; T2_S = 0.14; T2_F = 0.025; k_FS = 5; M0_F = 0.1; Delta = 0; PC1 = 0 + Delta; PC2 = pi + Delta;
         end
     case 'off'
+        Params = 5;
         switch tissuetype
             case 'HB'
                 T1_F = 0.45; T1_S = 1.4; T2_F = 0.015; T2_S = 0.09; M0_F = 0.15; k_FS = 0; Delta = 0; PC1 = 0 + Delta; PC2 = pi + Delta;
@@ -49,7 +51,7 @@ end
 
 %% Perform stochastic region contraction.
 
-Realisations = 1000; Trials = 40000; Iterations = 30; N = 50; Runs = 1; Params = 5;
+Realisations = 1000; Trials = 40000; Iterations = 30; N = 50; Runs = 1; 
 
 Solution_Bouhrara = zeros(length(k_FS),Realisations,Params);
 Solution_Deoni = zeros(length(k_FS),Realisations,Params);

@@ -16,7 +16,6 @@ SSFP0_Data_CS = CS_SSFP_SteadyState(FA_SSFP0, TR_SSFP, PC1, MaxAngle,'T1_S',T1_S
 SSFP180_Data_CS = CS_SSFP_SteadyState(FA_SSFP180, TR_SSFP, PC2, MaxAngle,'T1_S',T1_S,'T2_S',T2_S,'T1_F',T1_F,'T2_F',T2_F,'T1_B',T1_B,'M0_B',M0_B,'M0_F',M0_F,'M0_S',M0_S,'k_FS',k_FS,'k_SB',k_SB,'k_FB',k_FB);
 SSFP_Data_CS = [SSFP0_Data_CS ; SSFP180_Data_CS];
 %Data_CS = [SPGR_Data_CS./mean(SPGR_Data_CS) ; SSFP0_Data_CS./mean(SSFP_Data_CS) ; SSFP180_Data_CS./mean(SSFP_Data_CS)];
-%FA_Vector = rad2deg([FA_SPGR , FA_SSFP0 , FA_SSFP180]');
 
 SPGR_Data_B1 = B1_SPGR_SteadyState(FA_SPGR, TR_SPGR,'T1_S',T1_S,'T1_F',T1_F,'T1_B',T1_B,'M0_B',M0_B,'M0_F',M0_F,'M0_S',M0_S,'k_FS',k_FS,'k_SB',k_SB,'k_FB',k_FB);
 SSFP0_Data_B1 = B1_SSFP_SteadyState(FA_SSFP0, TR_SSFP, PC1,'T1_S',T1_S,'T2_S',T2_S,'T1_F',T1_F,'T2_F',T2_F,'T1_B',T1_B,'M0_B',M0_B,'M0_F',M0_F,'M0_S',M0_S,'k_FS',k_FS,'k_SB',k_SB,'k_FB',k_FB);
@@ -43,50 +42,81 @@ M0F_Prediction = (M0_F*(M0_B*R1_B*R1_F - dMzB*k_FB + M0_B*R1_F*W + M0_B*R1_B*k_F
 M0S_Prediction = (M0_S*(M0_B*R1_B*R1_S - dMzB*k_SB + M0_B*R1_S*W + M0_F*R1_S*k_FB + M0_B*R1_B*k_SB + M0_S*R1_S*k_SB))/(M0_B*R1_B*R1_S + M0_B*R1_S*W + M0_F*R1_S*k_FB + M0_B*R1_B*k_SB + M0_S*R1_S*k_SB + M0_B*W*k_SB);
 T1F_Prediction = 1/R1F_Prediction; T1S_Prediction = 1/R1S_Prediction;
 
+Plot_SPGR_P = SPGR_SteadyState_nonDE(FA_SPGR,TR_SPGR,'T1_S',T1S_Prediction,'T1_F',T1F_Prediction,'M0_F',M0F_Prediction,'M0_S',M0S_Prediction,'k_FS',kFS_Prediction,'k_SF',kSF_Prediction);
+Plot_SSFP0_P = SSFP_SteadyState_nonDE(FA_SSFP0,TR_SSFP,PC1,'T1_S',T1S_Prediction,'T2_S',T2_S,'T1_F',T1F_Prediction,'T2_F',T2_F,'M0_F',M0F_Prediction,'M0_S',M0S_Prediction,'k_FS',kFS_Prediction,'k_SF',kSF_Prediction);
+Plot_SSFP180_P = SSFP_SteadyState_nonDE(FA_SSFP180,TR_SSFP,PC2,'T1_S',T1S_Prediction,'T2_S',T2_S,'T1_F',T1F_Prediction,'T2_F',T2_F,'M0_F',M0F_Prediction,'M0_S',M0S_Prediction,'k_FS',kFS_Prediction,'k_SF',kSF_Prediction);
+Plot_SSFP_P = [Plot_SSFP0_P ; Plot_SSFP180_P];
+
+figure(1);
+P1 = plot(rad2deg(FA_SPGR), SPGR_Data_CS./mean(SPGR_Data_CS), 'mo','LineWidth',2); hold on
+P2 = plot(rad2deg(FA_SSFP0), SSFP0_Data_CS./mean(SSFP_Data_CS),'mo','LineWidth',2);
+P3 = plot(rad2deg(FA_SSFP180), SSFP180_Data_CS./mean(SSFP_Data_CS),'mo','LineWidth',2);
+
+P4 = plot(rad2deg(FA_SPGR), SPGR_Data_B1./mean(SPGR_Data_B1), 'b:','LineWidth',2);
+P5 = plot(rad2deg(FA_SSFP0), SSFP0_Data_B1./mean(SSFP_Data_B1),'b:','LineWidth',2);
+P6 = plot(rad2deg(FA_SSFP180), SSFP180_Data_B1./mean(SSFP_Data_B1),'b:','LineWidth',2);
+
+P7 = plot(rad2deg(FA_SPGR), SPGR_Data_TRF./mean(SPGR_Data_TRF), 'r-.','LineWidth',2);
+P8 = plot(rad2deg(FA_SSFP0), SSFP0_Data_TRF./mean(SSFP_Data_TRF),'r-.','LineWidth',2);
+P9 = plot(rad2deg(FA_SSFP180), SSFP180_Data_TRF./mean(SSFP_Data_TRF),'r-.','LineWidth',2);
+
+P10 = plot(rad2deg(FA_SPGR), Plot_SPGR_P./mean(Plot_SPGR_P),'k-','LineWidth',2); 
+P11 = plot(rad2deg(FA_SSFP0), Plot_SSFP0_P./mean(Plot_SSFP_P),'k-','LineWidth',2);
+P12 = plot(rad2deg(FA_SSFP180), Plot_SSFP180_P./mean(Plot_SSFP_P),'k-','LineWidth',2);
+
+ll = legend([P1 P4 P7 P10],{'CSMT','US (B_{1}-Scaling)','US (T_{RF}-Scaling)','Predicted'});
+ll.FontSize = 18; legend boxoff
+xlabel('FA (deg)', 'FontSize', 18); ylabel('Normalised Signal (a.u.)', 'FontSize', 18);
+get(gca, 'XTick');
+set(gca, 'FontSize', 16)
+get(gca, 'YTick');
+set(gca, 'FontSize', 16)
+grid on; grid minor;
+
 %% mcDESPOT fit.
 
-% T1S_LB = 0.25; T1S_UB = 1.5; T2S_LB = 0.04; T2S_UB = 0.15;
-% T1F_LB = 0.1; T1F_UB = 0.8; T2F_LB = 0.01; T2F_UB = 0.03;
-% M0F_LB = 0.001; M0F_UB = 0.35; M0S_LB = 0.001; M0S_UB = 0.8;
-% kFS_LB = (1/0.6); kFS_UB = 40; kSF_LB = (1/0.6); kSF_UB = 20;
-% Delta_LB = -pi; Delta_UB = pi; % Wood.
-% 
-% T1S_app = zeros(Runs,1); T2S_app = zeros(Runs,1); T1F_app = zeros(Runs,1); T2F_app = zeros(Runs,1); M0F_app = zeros(Runs,1); M0S_app = zeros(Runs,1); kFS_app = zeros(Runs,1); kSF_app = zeros(Runs,1); Delta_app = zeros(Runs,1);
-% T1S_rand = zeros(Runs,1); T2S_rand = zeros(Runs,1);
-% T1F_rand = zeros(Runs,1); T2F_rand = zeros(Runs,1);
-% M0F_rand = zeros(Runs,1); kFS_rand = zeros(Runs,1);
-% M0S_rand = zeros(Runs,1); kSF_rand = zeros(Runs,1);
-% Delta_rand = zeros(Runs,1);
-% 
-% Fval = zeros(Runs,1); Exitflag = zeros(Runs,1);
-% 
-% tic
-% for ii = 1:Runs
-%     
-%     disp(ii)
-%     
-%     % Randomly specify parameter values for fitting starting point.
-%     T1S_rand(ii) = T1S_LB + (T1S_UB - T1S_LB) .* rand(1,1); T2S_rand(ii) = T2S_LB + (T2S_UB - T2S_LB) .* rand(1,1);
-%     T1F_rand(ii) = T1F_LB + (T1F_UB - T1F_LB) .* rand(1,1); T2F_rand(ii) = T2F_LB + (T2F_UB - T2F_LB) .* rand(1,1);
-%     M0F_rand(ii) = M0F_LB + (M0F_UB - M0F_LB) .* rand(1,1); kFS_rand(ii) = kFS_LB + (kFS_UB - kFS_LB) .* rand(1,1);
-%     M0S_rand(ii) = M0S_LB + (M0S_UB - M0S_LB) .* rand(1,1); kSF_rand(ii) = kSF_LB + (kSF_UB - kSF_LB) .* rand(1,1);
-%     Delta_rand(ii) = Delta_LB + (Delta_UB - Delta_LB) .* rand(1,1);
-%     x0 = [T1S_rand(ii) T1F_rand(ii) M0F_rand(ii) M0S_rand(ii) kFS_rand(ii) kSF_rand(ii) T2S_rand(ii) T2F_rand(ii) Delta_rand(ii)];
-%     
-%     Sig_SPGR = @(x)(SPGR_SteadyState(FA_SPGR, TR_SPGR,'T1_S',x(1),'T1_F',x(2),'M0_F',x(3),'M0_S',x(4),'k_FS',x(5),'k_SF',x(6)));
-%     Sig_SSFP0 = @(x)(SSFP_SteadyState(FA_SSFP0, TR_SSFP, (0+x(9)),'T1_S',x(1),'T2_S',x(7),'T1_F',x(2),'T2_F',x(8),'M0_F',x(3),'M0_S',x(4),'k_FS',x(5),'k_SF',x(6)));
-%     Sig_SSFP180 = @(x)(SSFP_SteadyState(FA_SSFP180, TR_SSFP, (pi+x(9)),'T1_S',x(1),'T2_S',x(7),'T1_F',x(2),'T2_F',x(8),'M0_F',x(3),'M0_S',x(4),'k_FS',x(5),'k_SF',x(6)));
-%     Sig_SSFP = @(x)[Sig_SSFP0(x) ; Sig_SSFP180(x)];
-%     Sig = @(x)([Sig_SPGR(x)./mean(Sig_SPGR(x)) ; Sig_SSFP(x)./mean(Sig_SSFP(x))]);
-%     CF = @(x)sum((Sig(x) - Data).^2);
-%     [Sol,Fval(ii),Exitflag(ii),~,~,~,~] = fmincon(CF,x0,[],[],[],[],[T1S_LB T1F_LB M0F_LB M0S_LB kFS_LB kSF_LB T2S_LB T2F_LB Delta_LB],[T1S_UB T1F_UB M0F_UB M0S_UB kFS_UB kSF_UB T2S_UB T2F_UB Delta_UB], [], options);
-%     
-%     T1S_app(ii) = Sol(1); T1F_app(ii) = Sol(2); M0F_app(ii) = Sol(3); M0S_app(ii) = Sol(4); kFS_app(ii) = Sol(5); kSF_app(ii) = Sol(6); T2S_app(ii) = Sol(7); T2F_app(ii) = Sol(8); Delta_app(ii) = Sol(9);
-%     
-% end
-% toc
-% [~,Index] = min(Fval);
-% T1S_final = T1S_app(Index); T1F_final = T1F_app(Index); M0F_final = M0F_app(Index); M0S_final = M0S_app(Index); kFS_final = kFS_app(Index); kSF_final = kSF_app(Index); T2S_final = T2S_app(Index); T2F_final = T2F_app(Index); Delta_final = Delta_app(Index);
+T1S_LB = 0.25; T1S_UB = 1.5; T2S_LB = 0.04; T2S_UB = 0.15;
+T1F_LB = 0.1; T1F_UB = 0.8; T2F_LB = 0.01; T2F_UB = 0.03;
+M0F_LB = 0.001; M0F_UB = 0.35; M0S_LB = 0.001; M0S_UB = 0.8;
+kFS_LB = (1/0.6); kFS_UB = 40; kSF_LB = (1/0.6); kSF_UB = 20;
+Delta_LB = -pi; Delta_UB = pi; % Wood.
+
+T1S_app = zeros(Runs,1); T2S_app = zeros(Runs,1); T1F_app = zeros(Runs,1); T2F_app = zeros(Runs,1); M0F_app = zeros(Runs,1); M0S_app = zeros(Runs,1); kFS_app = zeros(Runs,1); kSF_app = zeros(Runs,1); Delta_app = zeros(Runs,1);
+T1S_rand = zeros(Runs,1); T2S_rand = zeros(Runs,1);
+T1F_rand = zeros(Runs,1); T2F_rand = zeros(Runs,1);
+M0F_rand = zeros(Runs,1); kFS_rand = zeros(Runs,1);
+M0S_rand = zeros(Runs,1); kSF_rand = zeros(Runs,1);
+Delta_rand = zeros(Runs,1);
+
+Fval = zeros(Runs,1); Exitflag = zeros(Runs,1);
+
+tic
+for ii = 1:Runs
+    
+    disp(ii)
+    
+    % Randomly specify parameter values for fitting starting point.
+    T1S_rand(ii) = T1S_LB + (T1S_UB - T1S_LB) .* rand(1,1); T2S_rand(ii) = T2S_LB + (T2S_UB - T2S_LB) .* rand(1,1);
+    T1F_rand(ii) = T1F_LB + (T1F_UB - T1F_LB) .* rand(1,1); T2F_rand(ii) = T2F_LB + (T2F_UB - T2F_LB) .* rand(1,1);
+    M0F_rand(ii) = M0F_LB + (M0F_UB - M0F_LB) .* rand(1,1); kFS_rand(ii) = kFS_LB + (kFS_UB - kFS_LB) .* rand(1,1);
+    M0S_rand(ii) = M0S_LB + (M0S_UB - M0S_LB) .* rand(1,1); kSF_rand(ii) = kSF_LB + (kSF_UB - kSF_LB) .* rand(1,1);
+    Delta_rand(ii) = Delta_LB + (Delta_UB - Delta_LB) .* rand(1,1);
+    x0 = [T1S_rand(ii) T1F_rand(ii) M0F_rand(ii) M0S_rand(ii) kFS_rand(ii) kSF_rand(ii) T2S_rand(ii) T2F_rand(ii) Delta_rand(ii)];
+    
+    Sig_SPGR = @(x)(SPGR_SteadyState(FA_SPGR, TR_SPGR,'T1_S',x(1),'T1_F',x(2),'M0_F',x(3),'M0_S',x(4),'k_FS',x(5),'k_SF',x(6)));
+    Sig_SSFP0 = @(x)(SSFP_SteadyState(FA_SSFP0, TR_SSFP, (0+x(9)),'T1_S',x(1),'T2_S',x(7),'T1_F',x(2),'T2_F',x(8),'M0_F',x(3),'M0_S',x(4),'k_FS',x(5),'k_SF',x(6)));
+    Sig_SSFP180 = @(x)(SSFP_SteadyState(FA_SSFP180, TR_SSFP, (pi+x(9)),'T1_S',x(1),'T2_S',x(7),'T1_F',x(2),'T2_F',x(8),'M0_F',x(3),'M0_S',x(4),'k_FS',x(5),'k_SF',x(6)));
+    Sig_SSFP = @(x)[Sig_SSFP0(x) ; Sig_SSFP180(x)];
+    Sig = @(x)([Sig_SPGR(x)./mean(Sig_SPGR(x)) ; Sig_SSFP(x)./mean(Sig_SSFP(x))]);
+    CF = @(x)sum((Sig(x) - Data).^2);
+    [Sol,Fval(ii),Exitflag(ii),~,~,~,~] = fmincon(CF,x0,[],[],[],[],[T1S_LB T1F_LB M0F_LB M0S_LB kFS_LB kSF_LB T2S_LB T2F_LB Delta_LB],[T1S_UB T1F_UB M0F_UB M0S_UB kFS_UB kSF_UB T2S_UB T2F_UB Delta_UB], [], options);
+    
+    T1S_app(ii) = Sol(1); T1F_app(ii) = Sol(2); M0F_app(ii) = Sol(3); M0S_app(ii) = Sol(4); kFS_app(ii) = Sol(5); kSF_app(ii) = Sol(6); T2S_app(ii) = Sol(7); T2F_app(ii) = Sol(8); Delta_app(ii) = Sol(9);
+    
+end
+toc
+[~,Index] = min(Fval);
+T1S_final = T1S_app(Index); T1F_final = T1F_app(Index); M0F_final = M0F_app(Index); M0S_final = M0S_app(Index); kFS_final = kFS_app(Index); kSF_final = kSF_app(Index); T2S_final = T2S_app(Index); T2F_final = T2F_app(Index); Delta_final = Delta_app(Index);
 
 %% Signal plots. Change title and subplot indices for CS or US.
 
@@ -127,36 +157,7 @@ T1F_Prediction = 1/R1F_Prediction; T1S_Prediction = 1/R1S_Prediction;
 % xlabel('FA [deg]','FontSize',12); ylabel('bSSFP_{180} Signal','FontSize',12)
 % get(gca, 'XTick'); get(gca, 'YTick'); set(gca, 'FontSize', 12)
 
-Plot_SPGR_P = SPGR_SteadyState(FA_SPGR,TR_SPGR,'T1_S',T1S_Prediction,'T1_F',T1F_Prediction,'M0_F',M0F_Prediction,'M0_S',M0S_Prediction,'k_FS',kFS_Prediction,'k_SF',kSF_Prediction);
-Plot_SSFP0_P = SSFP_SteadyState(FA_SSFP0,TR_SSFP,PC1,'T1_S',T1S_Prediction,'T2_S',T2_S,'T1_F',T1F_Prediction,'T2_F',T2_F,'M0_F',M0F_Prediction,'M0_S',M0S_Prediction,'k_FS',kFS_Prediction,'k_SF',kSF_Prediction);
-Plot_SSFP180_P = SSFP_SteadyState(FA_SSFP180,TR_SSFP,PC2,'T1_S',T1S_Prediction,'T2_S',T2_S,'T1_F',T1F_Prediction,'T2_F',T2_F,'M0_F',M0F_Prediction,'M0_S',M0S_Prediction,'k_FS',kFS_Prediction,'k_SF',kSF_Prediction);
-Plot_SSFP_P = [Plot_SSFP0_P ; Plot_SSFP180_P];
 
-figure(1);
-P1 = plot(rad2deg(FA_SPGR), SPGR_Data_CS./mean(SPGR_Data_CS), 'mo','LineWidth',2); hold on
-P2 = plot(rad2deg(FA_SSFP0), SSFP0_Data_CS./mean(SSFP_Data_CS),'mo','LineWidth',2);
-P3 = plot(rad2deg(FA_SSFP180), SSFP180_Data_CS./mean(SSFP_Data_CS),'mo','LineWidth',2);
-
-P4 = plot(rad2deg(FA_SPGR), SPGR_Data_B1./mean(SPGR_Data_B1), 'b:','LineWidth',2);
-P5 = plot(rad2deg(FA_SSFP0), SSFP0_Data_B1./mean(SSFP_Data_B1),'b:','LineWidth',2);
-P6 = plot(rad2deg(FA_SSFP180), SSFP180_Data_B1./mean(SSFP_Data_B1),'b:','LineWidth',2);
-
-P7 = plot(rad2deg(FA_SPGR), SPGR_Data_TRF./mean(SPGR_Data_TRF), 'r-.','LineWidth',2);
-P8 = plot(rad2deg(FA_SSFP0), SSFP0_Data_TRF./mean(SSFP_Data_TRF),'r-.','LineWidth',2);
-P9 = plot(rad2deg(FA_SSFP180), SSFP180_Data_TRF./mean(SSFP_Data_TRF),'r-.','LineWidth',2);
-
-P10 = plot(rad2deg(FA_SPGR), Plot_SPGR_P./mean(Plot_SPGR_P),'k-','LineWidth',2); 
-P11 = plot(rad2deg(FA_SSFP0), Plot_SSFP0_P./mean(Plot_SSFP_P),'k-','LineWidth',2);
-P12 = plot(rad2deg(FA_SSFP180), Plot_SSFP180_P./mean(Plot_SSFP_P),'k-','LineWidth',2);
-
-ll = legend([P1 P4 P7 P10],{'CSMT','US (B_{1}-Scaling)','US (T_{RF}-Scaling)','Predicted'});
-ll.FontSize = 18; legend boxoff
-xlabel('FA (deg)', 'FontSize', 18); ylabel('Normalised Signal (a.u.)', 'FontSize', 18);
-get(gca, 'XTick');
-set(gca, 'FontSize', 16)
-get(gca, 'YTick');
-set(gca, 'FontSize', 16)
-grid on; grid minor;
 
 %% Outtakes.
 

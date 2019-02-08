@@ -28,7 +28,7 @@ Trials = 5000; Iterations = 10; N = 50; Runs = 1;
 
 figure(1)
 subplot(3,1,1)
-plot(rad2deg(FA_SPGR), (SPGR_SteadyState(FA_SPGR,TR_SPGR,'T1_S',T1S_final,'T1_F',T1F_final,'M0_F',M0F_final,'M0_S',M0S_final,'k_FS',kFS_final,'k_SF',kSF_final)),'k--','LineWidth',2)
+plot(rad2deg(FA_SPGR), (SPGR_SteadyState_nonDE(FA_SPGR,TR_SPGR,'T1_S',T1S_final,'T1_F',T1F_final,'M0_F',M0F_final,'M0_S',M0S_final,'k_FS',kFS_final,'k_SF',kSF_final)),'k--','LineWidth',2)
 hold on
 plot(rad2deg(FA_SPGR), SPGR_Data, 'ro','LineWidth',2)
 xlabel('FA [deg]','FontSize',12); ylabel('SPGR Signal','Fontsize',12)
@@ -38,7 +38,7 @@ dim = [.695 .12 .205 .06];
 an = annotation('textbox',dim,'String',str); an.BackgroundColor = 'w'; an.FaceAlpha = 0.7; an.Color = 'b';
 
 subplot(3,1,2)
-plot(rad2deg(FA_SSFP0), (SSFP_SteadyState(FA_SSFP0,TR_SSFP,PC1,'T1_S',T1S_final,'T2_S',T2S_final,'T1_F',T1F_final,'T2_F',T2F_final,'M0_F',M0F_final,'M0_S',M0S_final,'k_FS',kFS_final,'k_SF',kSF_final)),'k--','LineWidth',2)
+plot(rad2deg(FA_SSFP0), (SSFP_SteadyState_nonDE(FA_SSFP0,TR_SSFP,PC1,'T1_S',T1S_final,'T2_S',T2S_final,'T1_F',T1F_final,'T2_F',T2F_final,'M0_F',M0F_final,'M0_S',M0S_final,'k_FS',kFS_final,'k_SF',kSF_final)),'k--','LineWidth',2)
 hold on
 plot(rad2deg(FA_SSFP0), SSFP0_Data,'ro','LineWidth',2)
 xlabel('FA [deg]','FontSize',12); ylabel('bSSFP_{0} Signal','Fontsize',12)
@@ -48,7 +48,7 @@ ll.FontSize = 12;
 set(ll.BoxFace, 'ColorType','truecoloralpha','ColorData',uint8(255*[.5;.5;.5;.1]));
 
 subplot(3,1,3)
-plot(rad2deg(FA_SSFP180), (SSFP_SteadyState(FA_SSFP180,TR_SSFP,PC2,'T1_S',T1S_final,'T2_S',T2S_final,'T1_F',T1F_final,'T2_F',T2F_final,'M0_F',M0F_final,'M0_S',M0S_final,'k_FS',kFS_final,'k_SF',kSF_final)),'k--','LineWidth',2)
+plot(rad2deg(FA_SSFP180), (SSFP_SteadyState_nonDE(FA_SSFP180,TR_SSFP,PC2,'T1_S',T1S_final,'T2_S',T2S_final,'T1_F',T1F_final,'T2_F',T2F_final,'M0_F',M0F_final,'M0_S',M0S_final,'k_FS',kFS_final,'k_SF',kSF_final)),'k--','LineWidth',2)
 hold on
 plot(rad2deg(FA_SSFP180), SSFP180_Data,'ro','LineWidth',2)
 xlabel('FA [deg]','FontSize',12); ylabel('bSSFP_{180} Signal','FontSize',12)
