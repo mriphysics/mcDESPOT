@@ -1,4 +1,4 @@
-%%% mcDESPOT in vivo fitting script with data processed in "Processing.m". %%%
+%%% mcDESPOT in vivo fitting script with data processed in "InVivo_Processing.m". %%%
 
 %% Format data. !!! WITHOUT LOW FA bSSFP0 DATA. !!!
 
@@ -22,8 +22,7 @@ Slice = 64; x_min = 11; x_max = 121; y_min = 1; y_max = 138; % 74 for non-CSMT.
 y_vector = (y_min:1:y_max)'; x_vector = (x_min:1:x_max)';
 Coords = zeros(length(y_vector)*length(x_vector),3);
 
-figure(1); imagesc(abs(squeeze(SPGRFA20_Image(Slice,:,:)))); hold on; %caxis([0 1.5])
-rectangle('Position',[50 1 71 1],'EdgeColor','w'); axis square;
+figure(1); imagesc(abs(squeeze(B1_Image(Slice,:,:)))); axis square;
 
 Step = 0;
 for ii = 1:length(y_vector)
@@ -94,11 +93,7 @@ switch exchange
         [T1S_Zhang_NE, T1F_Zhang_NE, T2S_Zhang_NE, T2F_Zhang_NE, M0F_Zhang_NE, Delta_Zhang_NE] = SRC_mcDESPOT_Zhang_NoEx(Fitted_Coords, Trials, Iterations, N, Fitted_FA_SPGR, Fitted_FA_SSFP180, Fitted_FA_SSFP0, TR_SPGR, TR_SSFP, Fitted_Data);
 end
 
-%% Plot MWF maps and WM histograms for Figure 9. Modify for SF5.
-
-%%% Plotted point is (71,65) = MapCrop(65,71) and (71,74) in original
-%%% orientation. Corresponds to Pixel 8176, so use Param(8176) in
-%%% Signal_Analaysis.m.
+%% Plot MWF maps and WM histograms for Figure 10. Modify for SF5.
 
 MWF_Bouhrara = zeros(size(Coords,1),1);
 MWF_Deoni = zeros(size(Coords,1),1);
@@ -107,10 +102,10 @@ MWF_Zhang = zeros(size(Coords,1),1);
 
 for pp = 1:length(Indices_Fitted)
    
-    MWF_Bouhrara(Indices_Fitted(pp),1) = M0F_Bouhrara(pp);
-    MWF_Deoni(Indices_Fitted(pp),1) = M0F_Deoni(pp);
-    MWF_Wood(Indices_Fitted(pp),1) = M0F_Wood(pp);
-    MWF_Zhang(Indices_Fitted(pp),1) = M0F_Zhang(pp);
+    MWF_Bouhrara(Indices_Fitted(pp),1) = M0F_Bouhrara_NE(pp);
+    MWF_Deoni(Indices_Fitted(pp),1) = M0F_Deoni_NE(pp);
+    MWF_Wood(Indices_Fitted(pp),1) = M0F_Wood_NE(pp);
+    MWF_Zhang(Indices_Fitted(pp),1) = M0F_Zhang_NE(pp);
 
 end
 
@@ -119,27 +114,27 @@ Map_Deoni = flipud(vec2mat(MWF_Deoni,length(x_vector)));
 Map_Wood = flipud(vec2mat(MWF_Wood,length(x_vector)));
 Map_Zhang = flipud(vec2mat(MWF_Zhang,length(x_vector)));
 
-%ROI = roipoly(Map_Bouhrara); 
+ROI = roipoly(Map_Bouhrara); 
 
 MapCrop_Bouhrara = Map_Bouhrara; MapCrop_Bouhrara(~ROI) = 0;
-figure(2); subplot(2,5,1); 
-imagesc(MapCrop_Bouhrara); hold on; cb1 = colorbar; axis off; colormap(magma); tt = title('B1'); tt.FontSize = 16; pbaspect([1.11 1.38 1]); caxis([0 0.35]); cb1.FontSize = 12; plot(73,65,'.','MarkerSize',20,'Color','g')
+figure(2); subplot(2,4,1); 
+imagesc(MapCrop_Bouhrara); hold on; cb1 = colorbar; axis off; colormap(magma); tt = title('B1'); tt.FontSize = 18; pbaspect([1.11 1.38 1]); caxis([0 0.35]); cb1.FontSize = 14; plot(67,57,'.','MarkerSize',20,'Color','g')
 text(-20,130,'(a)','FontSize',16)
 
 MapCrop_Deoni = Map_Deoni; MapCrop_Deoni(~ROI) = 0;
-figure(2); subplot(2,5,2); imagesc(MapCrop_Deoni); hold on; cb2 = colorbar; axis off; colormap(magma); tt = title('B2'); tt.FontSize = 16; pbaspect([1.11 1.38 1]); caxis([0 0.35]); cb2.FontSize = 12; plot(73,65,'.','MarkerSize',20,'Color','g')
+figure(2); subplot(2,4,2); imagesc(MapCrop_Deoni); hold on; cb2 = colorbar; axis off; colormap(magma); tt = title('B2'); tt.FontSize = 18; pbaspect([1.11 1.38 1]); caxis([0 0.35]); cb2.FontSize = 14; plot(67,57,'.','MarkerSize',20,'Color','g') % Was: 73,65
 text(-20,130,'(b)','FontSize',16)
 
 MapCrop_Wood = Map_Wood; MapCrop_Wood(~ROI) = 0;
-figure(2); subplot(2,5,3); imagesc(MapCrop_Wood); hold on; cb3 = colorbar; axis off; colormap(magma); tt = title('B3'); tt.FontSize = 16; pbaspect([1.11 1.38 1]); caxis([0 0.35]); cb3.FontSize = 12; plot(73,65,'.','MarkerSize',20,'Color','g')
+figure(2); subplot(2,4,3); imagesc(MapCrop_Wood); hold on; cb3 = colorbar; axis off; colormap(magma); tt = title('B3'); tt.FontSize = 18; pbaspect([1.11 1.38 1]); caxis([0 0.35]); cb3.FontSize = 14; plot(67,57,'.','MarkerSize',20,'Color','g')
 text(-20,130,'(c)','FontSize',16)
 
 MapCrop_Zhang = Map_Zhang; MapCrop_Zhang(~ROI) = 0;
-figure(2); subplot(2,5,4); imagesc(MapCrop_Zhang); hold on; cb4 = colorbar; axis off; colormap(magma); tt = title('B4'); tt.FontSize = 16; pbaspect([1.11 1.38 1]); caxis([0 0.35]); cb4.FontSize = 12; plot(73,65,'.','MarkerSize',20,'Color','g')
+figure(2); subplot(2,4,4); imagesc(MapCrop_Zhang); hold on; cb4 = colorbar; axis off; colormap(magma); tt = title('B4'); tt.FontSize = 18; pbaspect([1.11 1.38 1]); caxis([0 0.35]); cb4.FontSize = 14; plot(67,57,'.','MarkerSize',20,'Color','g')
 text(-20,130,'(d)','FontSize',16)
 
 MapCrop_BouhraraLSQ = Map_BouhraraLSQ; MapCrop_BouhraraLSQ(~ROI) = 0; % From LM_Test.m.
-figure(2); subplot(2,5,5); imagesc(MapCrop_BouhraraLSQ); hold on; cb1 = colorbar; axis off; colormap(magma); tt = title('lsqnonlin'); tt.FontSize = 16; pbaspect([1.11 1.38 1]); caxis([0 0.35]); cb1.FontSize = 12; plot(73,65,'.','MarkerSize',20,'Color','g')
+figure(2); subplot(2,5,5); imagesc(MapCrop_BouhraraLSQ); hold on; cb1 = colorbar; axis off; colormap(magma); tt = title('lsqnonlin'); tt.FontSize = 18; pbaspect([1.11 1.38 1]); caxis([0 0.35]); cb1.FontSize = 14; plot(67,57,'.','MarkerSize',20,'Color','g')
 text(-20,130,'(e)','FontSize',16)
 
 WM_Data = zeros(length(Coords),1);
@@ -160,7 +155,7 @@ WMMap_Crop = WM_Map; WMMap_Crop(~ROI) = 0;
 
 WM_Pixels = find(WMMap_Crop == 1);
 
-figure(2); subplot(2,4,[5 6]);
+figure(2); subplot(2,4,[5 6 7 8]);
 [N1,E1] = histcounts(MapCrop_Bouhrara(WM_Pixels)); 
 plot(E1(2:end),N1,'o--','Color',[0	0.447000000000000	0.741000000000000],'LineWidth',2); hold on
 [N2,E2] = histcounts(MapCrop_Deoni(WM_Pixels));
@@ -171,9 +166,9 @@ plot(E3(2:end),N3,'o--','Color',[0.929000000000000	0.694000000000000	0.125000000
 plot(E4(2:end),N4,'o--','Color',[0.494000000000000	0.184000000000000	0.556000000000000],'LineWidth',2)
 [N5,E5] = histcounts(MapCrop_BouhraraLSQ(WM_Pixels)); 
 plot(E5(2:end),N5,'o--','Color',[0.466000000000000	0.674000000000000	0.188000000000000],'LineWidth',2)
-xlabel('MWF','FontSize',16); ylabel('Count','FontSize',16)
-ll = legend('B1','B2','B3','B4','lsqnonlin'); ll.FontSize = 16; legend('boxoff');
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+xlabel('MWF','FontSize',18); ylabel('Count','FontSize',18)
+ll = legend('B1','B2','B3','B4','lsqnonlin'); ll.FontSize = 18; legend('boxoff');
+get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 grid on; grid minor;
 text(0.02,0.88,'(f)','Units','Normalized','VerticalAlignment','Bottom','FontSize',16)
 
@@ -191,31 +186,36 @@ for pp = 1:length(Indices_Fitted)
 
 end
 
-
 M0F_Map = vec2mat(M0F_MapVector,length(x_vector));
 
-% Select ROI to discard erroneous regions at brain edges.
+Select ROI to discard erroneous regions at brain edges.
 ROI = roipoly(M0F_Map); 
 
 T1F_Map = vec2mat(T1F_MapVector,length(x_vector));
-T1F_Map_Crop = T1F_Map; T1F_Map_Crop(~ROI) = 0;
-figure(3); subplot(2,3,1); imagesc(flipud(T1F_Map_Crop)); cb = colorbar; cb.FontSize = 14; cb.Label.String = '(s)'; cb.Label.FontSize = 18; axis off; colormap(inferno); tt = title('T_{1F}'); tt.FontSize = 16; pbaspect([1.11 1.38 1])
+T1F_Map_Crop = T1F_Map; 
+T1F_Map_Crop(~ROI) = 0;
+figure(3); subplot(2,3,1); imagesc(flipud(T1F_Map_Crop)); cb = colorbar; cb.Label.String = '(s)'; set(cb,'FontSize',20); axis off; colormap(inferno); tt = title('T_{1F}'); tt.FontSize = 18; pbaspect([1.11 1.38 1])
 
 T1S_Map = vec2mat(T1S_MapVector,length(x_vector));
-T1S_Map_Crop = T1S_Map; T1S_Map_Crop(~ROI) = 0;
-figure(3); subplot(2,3,2); imagesc(flipud(T1S_Map_Crop)); cb = colorbar; cb.FontSize = 14; cb.Label.String = '(s)'; cb.Label.FontSize = 18; axis off; colormap(inferno); tt = title('T_{1S}'); tt.FontSize = 16; pbaspect([1.11 1.38 1])
+T1S_Map_Crop = T1S_Map; 
+T1S_Map_Crop(~ROI) = 0;
+figure(3); subplot(2,3,2); imagesc(flipud(T1S_Map_Crop)); cb = colorbar; cb.Label.String = '(s)'; set(cb,'FontSize',20); axis off; colormap(inferno); tt = title('T_{1S}'); tt.FontSize = 18; pbaspect([1.11 1.38 1])
 
 T2F_Map = vec2mat(T2F_MapVector,length(x_vector));
-T2F_Map_Crop = T2F_Map; T2F_Map_Crop(~ROI) = 0;
-figure(3); subplot(2,3,3); imagesc(flipud(T2F_Map_Crop)); cb = colorbar; cb.FontSize = 14; cb.Label.String = '(s)'; cb.Label.FontSize = 18; axis off; colormap(inferno); tt = title('T_{2F}'); tt.FontSize = 16; pbaspect([1.11 1.38 1])
+T2F_Map_Crop = T2F_Map; 
+T2F_Map_Crop(~ROI) = 0;
+figure(3); subplot(2,3,3); imagesc(flipud(T2F_Map_Crop)); cb = colorbar; cb.Label.String = '(s)'; set(cb,'FontSize',20); axis off; colormap(inferno); tt = title('T_{2F}'); tt.FontSize = 18; pbaspect([1.11 1.38 1])
 
 T2S_Map = vec2mat(T2S_MapVector,length(x_vector));
-T2S_Map_Crop = T2S_Map; T2S_Map_Crop(~ROI) = 0;
-figure(3); subplot(2,3,4); imagesc(flipud(T2S_Map_Crop)); cb = colorbar; cb.FontSize = 14; cb.Label.String = '(s)'; cb.Label.FontSize = 18; axis off; colormap(inferno); tt = title('T_{2S}'); tt.FontSize = 16; pbaspect([1.11 1.38 1])
+T2S_Map_Crop = T2S_Map; 
+T2S_Map_Crop(~ROI) = 0;
+figure(3); subplot(2,3,4); imagesc(flipud(T2S_Map_Crop)); cb = colorbar; cb.Label.String = '(s)'; set(cb,'FontSize',20); axis off; colormap(inferno); tt = title('T_{2S}'); tt.FontSize = 18; pbaspect([1.11 1.38 1])
 
-M0F_Map_Crop = M0F_Map; M0F_Map_Crop(~ROI) = 0;
-figure(3); subplot(2,3,5); imagesc(flipud(M0F_Map_Crop)); cb = colorbar; cb.FontSize = 14; axis off; colormap(inferno); tt = title('MWF'); tt.FontSize = 18; pbaspect([1.11 1.38 1])
+M0F_Map_Crop = M0F_Map; 
+M0F_Map_Crop(~ROI) = 0;
+figure(3); subplot(2,3,5); imagesc(flipud(M0F_Map_Crop)); cb = colorbar; set(cb,'FontSize',20); axis off; colormap(inferno); tt = title('MWF'); tt.FontSize = 20; pbaspect([1.11 1.38 1])
 
 kFS_Map = vec2mat(kFS_MapVector,length(x_vector));
-kFS_Map_Crop = kFS_Map; kFS_Map_Crop(~ROI) = 0;
-figure(3); subplot(2,3,6); imagesc(flipud(kFS_Map_Crop)); cb = colorbar; cb.FontSize = 14; cb.Label.String = '(s^{-1})'; cb.Label.FontSize = 18; axis off; colormap(inferno); tt = title('k_{FS}'); tt.FontSize = 16; pbaspect([1.11 1.38 1])
+kFS_Map_Crop = kFS_Map; 
+kFS_Map_Crop(~ROI) = 0;
+figure(3); subplot(2,3,6); imagesc(flipud(kFS_Map_Crop)); cb = colorbar; cb.Label.String = '(s^{-1})'; set(cb,'FontSize',20); axis off; colormap(inferno); tt = title('k_{FS}'); tt.FontSize = 18; pbaspect([1.11 1.38 1])

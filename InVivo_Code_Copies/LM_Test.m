@@ -14,14 +14,13 @@ Fitted_FA_SPGR(2:36,:) = 1e-10; Fitted_FA_SSFP0(2:36,:) = 1e-10; Fitted_FA_SSFP1
 
 parfor pix = 1:length(Fitted_Coords)
     
-    %disp(num2str(pix))
-    
     Function = @(x)((LM_Sigs(x,TR_SPGR,TR_SSFP, Fitted_FA_SPGR(pix,:), Fitted_FA_SSFP0(pix,:), Fitted_FA_SSFP180(pix,:))) - Fitted_Data(:,pix));
     
     Params_Est(pix,:) = lsqnonlin(Function,x0,lb,ub,options);
     
 end
 
+%%% Run this to get data in correct format for Figure 10.
 MWF_LM = zeros(size(Coords,1),1);
 for pp = 1:length(Indices_Fitted)
    
@@ -30,6 +29,7 @@ for pp = 1:length(Indices_Fitted)
 end
 
 Map_BouhraraLSQ = flipud(vec2mat(MWF_LM,length(x_vector)));
+%%%
 
 ROI = roipoly(Map_BouhraraLSQ); 
 MapCrop_BouhraraLSQ = Map_BouhraraLSQ; MapCrop_BouhraraLSQ(~ROI) = 0;

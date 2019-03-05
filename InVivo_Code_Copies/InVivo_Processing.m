@@ -185,4 +185,4 @@ B1_Map = load_nii('REGNIFTI_B1_CSMT.nii.gz'); B1_Image = B1_Map.img;
 
 WM_Mask = load_nii('BET2_NIFTI_SPGRFA20_pve_2.nii'); WM_Mask_Image = WM_Mask.img;
 
-%%% These files are then passed into InVivo_Test.m. %%%
+%%% These files are then passed into InVivo_Complete.m. %%%
