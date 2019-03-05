@@ -50,22 +50,24 @@ end
 
 %% Heat map analysis and plots.
 
-figure(3); subplot(1,3,1); MaxCF_T1 = max(exp(P_T1),[],3);
-imagesc([min(M0_Vector) max(M0_Vector)],[min(T1_Vector) max(T1_Vector)],MaxCF_T1); shading interp; xlabel('M_{0}','FontSize',12); ylabel('T_{1} (s)','FontSize',12); hold on;
-plot(M0,T1,'.','Color',[0 0.5 0], 'MarkerSize', 20); get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14); xlim([0.95 1.05])
+coloraxis = ([0 1]);
+
+figure(3); subplot(1,3,1); %MaxCF_T1 = max(exp(P_T1),[],3);
+imagesc([min(M0_Vector) max(M0_Vector)],[min(T1_Vector) max(T1_Vector)],MaxCF_T1_NoiseInd,coloraxis); shading interp; xlabel('M_{0}','FontSize',16); ylabel('T_{1} (s)','FontSize',16); hold on;
+plot(M0,T1,'.','Color',[0 0.5 0], 'MarkerSize', 20); get(gca, 'XTick'); set(gca, 'FontSize', 18); get(gca, 'YTick'); set(gca, 'FontSize', 18); xlim([0.95 1.05])
 axis square
 
-subplot(1,3,2); MaxCF_T2 = max(exp(P_T2),[],3);
-imagesc([min(T2_Vector) max(T2_Vector)],[min(M0_Vector) max(M0_Vector)],MaxCF_T2); shading interp; xlabel('T_{2} (s)','FontSize',12); ylabel('M_{0}','FontSize',12); hold on;
-plot(T2,M0,'.','Color',[0 0.5 0], 'MarkerSize', 20); get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14); xlim([0.095 0.105])
+subplot(1,3,2); %MaxCF_T2 = max(exp(P_T2),[],3);
+imagesc([min(T2_Vector) max(T2_Vector)],[min(M0_Vector) max(M0_Vector)],MaxCF_T2_NoiseInd,coloraxis); shading interp; xlabel('T_{2} (s)','FontSize',16); ylabel('M_{0}','FontSize',16); hold on;
+plot(T2,M0,'.','Color',[0 0.5 0], 'MarkerSize', 20); get(gca, 'XTick'); set(gca, 'FontSize', 18); get(gca, 'YTick'); set(gca, 'FontSize', 18); xlim([0.095 0.105])
 axis square
 
-subplot(1,3,3); MaxCF_T1T2 = max(exp(P_T1T2),[],3);
-imagesc([min(T2_Vector) max(T2_Vector)],[min(T1_Vector) max(T1_Vector)],MaxCF_T1T2); shading interp; xlabel('T_{2} (s)','FontSize',12); ylabel('T_{1} (s)','FontSize',12); hold on;
-plot(T2,T1,'.','Color',[0 0.5 0], 'MarkerSize', 20); get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14); xlim([0.095 0.105])
+subplot(1,3,3); %MaxCF_T1T2 = max(exp(P_T1T2),[],3);
+imagesc([min(T2_Vector) max(T2_Vector)],[min(T1_Vector) max(T1_Vector)],MaxCF_T1T2_NoiseInd,coloraxis); shading interp; xlabel('T_{2} (s)','FontSize',16); ylabel('T_{1} (s)','FontSize',16); hold on;
+plot(T2,T1,'.','Color',[0 0.5 0], 'MarkerSize', 20); get(gca, 'XTick'); set(gca, 'FontSize', 18); get(gca, 'YTick'); set(gca, 'FontSize', 18); xlim([0.095 0.105])
 axis square
 
-colormap(magma); 
-hcb = colorbar('Position',[0.915318230852205 0.111888111888112 0.0124056094929895 0.813519813519814],'FontSize',11);
-colorTitleHandle = get(hcb,'Title'); titleString = 'P (a.u.)';
-set(colorTitleHandle,'String',titleString); hcb.FontSize = 14;
+colormap(flipud(magma)); 
+hcb = colorbar('Position',[0.909583090080568,0.291713961407491,0.013774574153008,0.450624290578888],'FontSize',14); hcb.FontSize = 18;
+colorTitleHandle = get(hcb,'Title'); titleString = '\eta';
+set(colorTitleHandle,'String',titleString,'FontSize',30); 

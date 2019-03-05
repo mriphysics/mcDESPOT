@@ -1,6 +1,5 @@
-%%% Performs search space sampling using logpdf_mcDESPOT. Generates file
-%%% SS_Sampling_Exchange_New.m" for Figure 1 or results needed for Figure
-%%% 2b and 2c (see kPCA section below).
+%%% Performs search space sampling using logpdf_mcDESPOT. Generates data
+%%% for Figures 1, 2b and 2c (see kPCA section below).
 
 close all; clear all;
 

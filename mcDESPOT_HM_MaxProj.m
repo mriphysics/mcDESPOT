@@ -1,4 +1,4 @@
-%%% Generates maximum projection heat maps for Figure 3. %%%
+%%% Generates maximum projection heat maps for Figures 3, 4 and SF3. %%%
 
 close all; clear all;
 

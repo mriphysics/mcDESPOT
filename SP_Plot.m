@@ -1,4 +1,4 @@
-%%% Generates Figure 1 from file SS_Sampling_Exchange_New.m". %%%
+%%% Generates singla plots and histograms for Figure 1. %%
 
 TR_SPGR = 6.5e-3; TR_SSFP = 6.5e-3; FA_SPGR = deg2rad([2 4 6 8 10 12 14 16 18 20]); FA_SSFP180 = deg2rad([2 6 14 22 30 38 46 54 62 70]); FA_SSFP0 = deg2rad([2 6 14 22 30 38 46 54 62 70]);
 
@@ -31,61 +31,61 @@ nTrials = 200e6; PlottingNo = 1000;
 
 figure(1);
 subplot(3,2,1); 
-histogram(T1F_Picked_T0,'BinWidth',0.05,'FaceAlpha',0.7); hold on; xlabel('T_{1F} (s)','FontSize',14); ylabel('Count','FontSize',14);
-histogram(T1F_Picked_T1,'BinWidth',0.05,'FaceAlpha',0.7); 
-histogram(T1F_Picked_T2,'BinWidth',0.05,'FaceAlpha',0.7); 
-histogram(T1F_Picked_T3,'BinWidth',0.05,'FaceAlpha',0.7); 
+histogram(T1F_Picked_T0,'BinWidth',0.02,'DisplayStyle','stairs','LineWidth',2); hold on; xlabel('T_{1F} (s)','FontSize',16); ylabel('Count','FontSize',16);
+histogram(T1F_Picked_T1,'BinWidth',0.02,'DisplayStyle','stairs','LineWidth',2); 
+histogram(T1F_Picked_T2,'BinWidth',0.02,'DisplayStyle','stairs','LineWidth',2); 
+histogram(T1F_Picked_T3,'BinWidth',0.02,'DisplayStyle','stairs','LineWidth',2); 
 cm = get(gca,'ColorOrder');
-line([T1F_1 T1F_1],[0 300],'Color',cm(2,:),'LineStyle','--','LineWidth',2); line([T1F_2 T1F_2],[0 300],'Color',cm(3,:),'LineStyle','--','LineWidth',2);  line([T1F_3 T1F_3],[0 300],'Color',cm(4,:),'LineStyle','--','LineWidth',2); line([T1F_0 T1F_0],[0 300],'Color',cm(1,:),'LineStyle','--','LineWidth',2)
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+line([T1F_1 T1F_1],[0 150],'Color',cm(2,:),'LineStyle',':','LineWidth',4); line([T1F_2 T1F_2],[0 150],'Color',cm(3,:),'LineStyle',':','LineWidth',4);  line([T1F_3 T1F_3],[0 150],'Color',cm(4,:),'LineStyle',':','LineWidth',4); line([T1F_0 T1F_0],[0 150],'Color',cm(1,:),'LineStyle',':','LineWidth',4)
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16); ylim([0 150])
 grid on; grid minor
 
 subplot(3,2,2); 
-histogram(T1S_Picked_T0,'BinWidth',0.05,'FaceAlpha',0.7); hold on 
-histogram(T1S_Picked_T1,'BinWidth',0.05,'FaceAlpha',0.7); hold on; xlabel('T_{1S} (s)','FontSize',14); ylabel('Count','FontSize',14); 
-histogram(T1S_Picked_T2,'BinWidth',0.05,'FaceAlpha',0.7); 
-histogram(T1S_Picked_T3,'BinWidth',0.05,'FaceAlpha',0.7); 
-ll = legend({'HB','WML','INT','GML'},'Position',[0.846265938069217,0.76394844802434,0.056284152158622,0.191433561014963]); ll.FontSize = 16; ll.AutoUpdate = 'off'; legend('boxoff');
-line([T1S_1 T1S_1],[0 300],'Color',cm(2,:),'LineStyle','--','LineWidth',2); line([T1S_2 T1S_2],[0 300],'Color',cm(3,:),'LineStyle','--','LineWidth',2);  line([T1S_3 T1S_3],[0 300],'Color',cm(4,:),'LineStyle','--','LineWidth',2); line([T1S_0 T1S_0],[0 300],'Color',cm(1,:),'LineStyle','--','LineWidth',2)
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+histogram(T1S_Picked_T0,'BinWidth',0.05,'DisplayStyle','stairs','LineWidth',2); hold on 
+histogram(T1S_Picked_T1,'BinWidth',0.05,'DisplayStyle','stairs','LineWidth',2); hold on; xlabel('T_{1S} (s)','FontSize',16); ylabel('Count','FontSize',16); 
+histogram(T1S_Picked_T2,'BinWidth',0.05,'DisplayStyle','stairs','LineWidth',2); 
+histogram(T1S_Picked_T3,'BinWidth',0.05,'DisplayStyle','stairs','LineWidth',2); 
+ll = legend({'HB','WML','INT','GML'},'Position',[0.846265938069217,0.76394844802434,0.056284152158622,0.191433561014963]); ll.FontSize = 18; ll.AutoUpdate = 'off'; legend('boxoff');
+line([T1S_1 T1S_1],[0 320],'Color',cm(2,:),'LineStyle',':','LineWidth',4); line([T1S_2 T1S_2],[0 320],'Color',cm(3,:),'LineStyle',':','LineWidth',4);  line([T1S_3 T1S_3],[0 320],'Color',cm(4,:),'LineStyle',':','LineWidth',4); line([T1S_0 T1S_0],[0 320],'Color',cm(1,:),'LineStyle',':','LineWidth',4)
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16); ylim([0 320]);
 grid on; grid minor
 
 subplot(3,2,3); 
-histogram(T2F_Picked_T0,'BinWidth',0.0025,'FaceAlpha',0.7); hold on 
-histogram(T2F_Picked_T1,'BinWidth',0.0025,'FaceAlpha',0.7); hold on; xlabel('T_{2F} (s)','FontSize',14); ylabel('Count','FontSize',14); 
-histogram(T2F_Picked_T2,'BinWidth',0.0025,'FaceAlpha',0.7); 
-histogram(T2F_Picked_T3,'BinWidth',0.0025,'FaceAlpha',0.7); 
-line([T2F_1 T2F_1],[0 300],'Color',cm(2,:),'LineStyle','--','LineWidth',2); line([T2F_2 T2F_2],[0 300],'Color',cm(3,:),'LineStyle','--','LineWidth',2);  line([T2F_3 T2F_3],[0 300],'Color',cm(4,:),'LineStyle','--','LineWidth',2); line([T2F_0 T2F_0],[0 300],'Color',cm(1,:),'LineStyle','--','LineWidth',2)
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+histogram(T2F_Picked_T0,'BinWidth',0.002,'DisplayStyle','stairs','LineWidth',2); hold on 
+histogram(T2F_Picked_T1,'BinWidth',0.002,'DisplayStyle','stairs','LineWidth',2); hold on; xlabel('T_{2F} (s)','FontSize',16); ylabel('Count','FontSize',16); 
+histogram(T2F_Picked_T2,'BinWidth',0.002,'DisplayStyle','stairs','LineWidth',2); 
+histogram(T2F_Picked_T3,'BinWidth',0.002,'DisplayStyle','stairs','LineWidth',2); 
+line([T2F_1 T2F_1],[0 260],'Color',cm(2,:),'LineStyle',':','LineWidth',4); line([T2F_2 T2F_2],[0 260],'Color',cm(3,:),'LineStyle',':','LineWidth',4);  line([T2F_3 T2F_3],[0 260],'Color',cm(4,:),'LineStyle',':','LineWidth',4); line([T2F_0 T2F_0],[0 260],'Color',cm(1,:),'LineStyle',':','LineWidth',4)
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16); ylim([0 260]);
 grid on; grid minor
 
 subplot(3,2,4); 
-histogram(T2S_Picked_T0,'BinWidth',0.008,'FaceAlpha',0.7); hold on 
-histogram(T2S_Picked_T1,'BinWidth',0.008,'FaceAlpha',0.7); hold on; xlabel('T_{2S} (s)','FontSize',14); ylabel('Count','FontSize',14); 
-histogram(T2S_Picked_T2,'BinWidth',0.008,'FaceAlpha',0.7); 
-histogram(T2S_Picked_T3,'BinWidth',0.008,'FaceAlpha',0.7); 
-line([T2S_1 T2S_1],[0 200],'Color',cm(2,:),'LineStyle','--','LineWidth',2); line([T2S_2 T2S_2],[0 200],'Color',cm(3,:),'LineStyle','--','LineWidth',2);  line([T2S_3 T2S_3],[0 200],'Color',cm(4,:),'LineStyle','--','LineWidth',2); line([T2S_0 T2S_0],[0 200],'Color',cm(1,:),'LineStyle','--','LineWidth',2)
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+histogram(T2S_Picked_T0,'BinWidth',0.005,'DisplayStyle','stairs','LineWidth',2); hold on 
+histogram(T2S_Picked_T1,'BinWidth',0.005,'DisplayStyle','stairs','LineWidth',2); hold on; xlabel('T_{2S} (s)','FontSize',16); ylabel('Count','FontSize',16); 
+histogram(T2S_Picked_T2,'BinWidth',0.005,'DisplayStyle','stairs','LineWidth',2); 
+histogram(T2S_Picked_T3,'BinWidth',0.005,'DisplayStyle','stairs','LineWidth',2); 
+line([T2S_1 T2S_1],[0 150],'Color',cm(2,:),'LineStyle',':','LineWidth',4); line([T2S_2 T2S_2],[0 150],'Color',cm(3,:),'LineStyle',':','LineWidth',4);  line([T2S_3 T2S_3],[0 150],'Color',cm(4,:),'LineStyle',':','LineWidth',4); line([T2S_0 T2S_0],[0 150],'Color',cm(1,:),'LineStyle',':','LineWidth',4)
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16); ylim([0 150]);
 grid on; grid minor
 
 subplot(3,2,5); 
-histogram(M0F_Picked_T0,'BinWidth',0.025,'FaceAlpha',0.7); hold on 
-histogram(M0F_Picked_T1,'BinWidth',0.025,'FaceAlpha',0.7); hold on; xlabel('MWF','FontSize',14); ylabel('Count','FontSize',14); 
-histogram(M0F_Picked_T2,'BinWidth',0.025,'FaceAlpha',0.7); 
-histogram(M0F_Picked_T3,'BinWidth',0.025,'FaceAlpha',0.7); 
-line([M0F_1 M0F_1],[0 200],'Color',cm(2,:),'LineStyle','--','LineWidth',2); line([M0F_2 M0F_2],[0 200],'Color',cm(3,:),'LineStyle','--','LineWidth',2);  line([M0F_3 M0F_3],[0 200],'Color',cm(4,:),'LineStyle','--','LineWidth',2); line([M0F_0 M0F_0],[0 200],'Color',cm(1,:),'LineStyle','--','LineWidth',2)
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+histogram(M0F_Picked_T0,'BinWidth',0.02,'DisplayStyle','stairs','LineWidth',2); hold on 
+histogram(M0F_Picked_T1,'BinWidth',0.02,'DisplayStyle','stairs','LineWidth',2); hold on; xlabel('MWF','FontSize',16); ylabel('Count','FontSize',16); 
+histogram(M0F_Picked_T2,'BinWidth',0.02,'DisplayStyle','stairs','LineWidth',2); 
+histogram(M0F_Picked_T3,'BinWidth',0.02,'DisplayStyle','stairs','LineWidth',2); 
+line([M0F_1 M0F_1],[0 200],'Color',cm(2,:),'LineStyle',':','LineWidth',4); line([M0F_2 M0F_2],[0 200],'Color',cm(3,:),'LineStyle',':','LineWidth',4);  line([M0F_3 M0F_3],[0 200],'Color',cm(4,:),'LineStyle',':','LineWidth',4); line([M0F_0 M0F_0],[0 200],'Color',cm(1,:),'LineStyle',':','LineWidth',4)
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 grid on; grid minor
 
 switch exchange
     case 'on'
         subplot(3,2,6);
-        histogram(kFS_Picked_T0,'BinWidth',2,'FaceAlpha',0.7); hold on
-        histogram(kFS_Picked_T1,'BinWidth',2,'FaceAlpha',0.7); hold on; xlabel('k_{FS} (s^{-1})','FontSize',14); ylabel('Count','FontSize',14);
-        histogram(kFS_Picked_T2,'BinWidth',2,'FaceAlpha',0.7);
-        histogram(kFS_Picked_T3,'BinWidth',2,'FaceAlpha',0.7);
-        line([kFS_1 kFS_1],[0 200],'Color',cm(2,:),'LineStyle','--','LineWidth',2); line([kFS_2 kFS_2],[0 200],'Color',cm(3,:),'LineStyle','--','LineWidth',2);  line([kFS_3 kFS_3],[0 200],'Color',cm(4,:),'LineStyle','--','LineWidth',2); line([kFS_0 kFS_0],[0 200],'Color',cm(1,:),'LineStyle','--','LineWidth',2)
-        get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+        histogram(kFS_Picked_T0,'BinWidth',2,'DisplayStyle','stairs','LineWidth',2); hold on
+        histogram(kFS_Picked_T1,'BinWidth',2,'DisplayStyle','stairs','LineWidth',2); hold on; xlabel('k_{FS} (s^{-1})','FontSize',16); ylabel('Count','FontSize',16);
+        histogram(kFS_Picked_T2,'BinWidth',2,'DisplayStyle','stairs','LineWidth',2);
+        histogram(kFS_Picked_T3,'BinWidth',2,'DisplayStyle','stairs','LineWidth',2);
+        line([kFS_1 kFS_1],[0 200],'Color',cm(2,:),'LineStyle',':','LineWidth',4); line([kFS_2 kFS_2],[0 200],'Color',cm(3,:),'LineStyle',':','LineWidth',4);  line([kFS_3 kFS_3],[0 200],'Color',cm(4,:),'LineStyle',':','LineWidth',4); line([kFS_0 kFS_0],[0 200],'Color',cm(1,:),'LineStyle',':','LineWidth',4)
+        get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16); ylim([0 200])
         grid on; grid minor
     case 'off'
 end
@@ -116,27 +116,27 @@ figure(2); subplot(2,2,1)
 plot(rad2deg(FA_SPGR), SPGR_Data_0/mean(SPGR_Data_0), 'mo','Linewidth',2,'MarkerSize',10); hold on
 plot(rad2deg(FA_SSFP0), SSFP_Data_0_0/mean(SSFP_Data_0), 'ko','LineWidth',2,'MarkerSize',10)
 plot(rad2deg(FA_SSFP180), SSFP_Data_180_0/mean(SSFP_Data_0), 'ro','LineWidth',2,'MarkerSize',10)
-xlabel('FA (^{o})', 'FontSize', 14); ylabel('Normalised Signal (a.u.)', 'FontSize',14);
-ll = legend({'SPGR','bSSFP0','bSSFP180'},'Orientation','horizontal','Position',[0.395810568652952,0.490026486011197,0.214207646283296,0.039999998966853]); ll.FontSize = 16; ll.AutoUpdate = 'off'; legend('boxoff'); 
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14); tt = title('HB'); tt.FontSize = 18; grid on; grid minor;
+xlabel('FA (^{o})', 'FontSize', 16); ylabel('Normalised Signal (a.u.)', 'FontSize',16);
+ll = legend({'SPGR','bSSFP0','bSSFP180'},'Orientation','horizontal','Position',[0.395810568652952,0.490026486011197,0.214207646283296,0.039999998966853]); ll.FontSize = 18; ll.AutoUpdate = 'off'; legend('boxoff'); 
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16); tt = title('HB'); tt.FontSize = 20; grid on; grid minor;
 subplot(2,2,2)
 plot(rad2deg(FA_SPGR), SPGR_Data_1/mean(SPGR_Data_1), 'mo','Linewidth',2,'MarkerSize',10); hold on
 plot(rad2deg(FA_SSFP0), SSFP_Data_0_1/mean(SSFP_Data_1), 'ko','LineWidth',2,'MarkerSize',10)
 plot(rad2deg(FA_SSFP180), SSFP_Data_180_1/mean(SSFP_Data_1), 'ro','LineWidth',2,'MarkerSize',10)
-xlabel('FA (^{o})', 'FontSize', 14); ylabel('Normalised Signal (a.u.)', 'FontSize',14);
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14); tt = title('WML'); tt.FontSize = 18; grid on; grid minor;
+xlabel('FA (^{o})', 'FontSize', 16); ylabel('Normalised Signal (a.u.)', 'FontSize',16);
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16); tt = title('WML'); tt.FontSize = 20; grid on; grid minor;
 subplot(2,2,3)
 plot(rad2deg(FA_SPGR), SPGR_Data_2/mean(SPGR_Data_2), 'mo','Linewidth',2,'MarkerSize',10); hold on
 plot(rad2deg(FA_SSFP0), SSFP_Data_0_2/mean(SSFP_Data_2), 'ko','LineWidth',2,'MarkerSize',10)
 plot(rad2deg(FA_SSFP180), SSFP_Data_180_2/mean(SSFP_Data_2), 'ro','LineWidth',2,'MarkerSize',10)
-xlabel('FA (^{o})', 'FontSize', 14); ylabel('Normalised Signal (a.u.)', 'FontSize',14);
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14); tt = title('INT'); tt.FontSize = 18; grid on; grid minor;
+xlabel('FA (^{o})', 'FontSize', 16); ylabel('Normalised Signal (a.u.)', 'FontSize',16);
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16); tt = title('INT'); tt.FontSize = 20; grid on; grid minor;
 subplot(2,2,4)
 plot(rad2deg(FA_SPGR), SPGR_Data_3/mean(SPGR_Data_3), 'mo','Linewidth',2,'MarkerSize',10); hold on
 plot(rad2deg(FA_SSFP0), SSFP_Data_0_3/mean(SSFP_Data_3), 'ko','LineWidth',2,'MarkerSize',10)
 plot(rad2deg(FA_SSFP180), SSFP_Data_180_3/mean(SSFP_Data_3), 'ro','LineWidth',2,'MarkerSize',10)
-xlabel('FA (^{o})', 'FontSize', 14); ylabel('Normalised Signal (a.u.)', 'FontSize',14);
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14); tt = title('GML'); tt.FontSize = 18; grid on; grid minor;
+xlabel('FA (^{o})', 'FontSize', 16); ylabel('Normalised Signal (a.u.)', 'FontSize',16);
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16); tt = title('GML'); tt.FontSize = 20; grid on; grid minor;
 
 SPGR_FM_0 = zeros(length(FA_SPGR),PlottingNo);
 SSFP0_FM_0 = zeros(length(FA_SSFP0),PlottingNo);
@@ -214,9 +214,10 @@ plot(rad2deg(FA_SSFP0), SSFP0_FM_3, '-', 'Color', cm(4,:), 'LineWidth',0.1);
 plot(rad2deg(FA_SSFP180), SSFP180_FM_3, '-', 'Color', cm(4,:), 'LineWidth',0.1); hold on;
 
 subplot(2,2,1)
-axes('Position',[.33 .655 .1 .1]); box on
-plot(rad2deg(FA_SSFP180), SSFP180_FM_0, '-', 'Color', cm(1,:), 'LineWidth',0.1); hold on;
-ylim([1.8635 1.86375]); xlim([42.873323 42.873325]);
-xticks([42.8733235 42.8733245]); xticklabels({'42.8733235', '42.8733245'});
-get(gca, 'XTick'); set(gca, 'FontSize', 11); get(gca, 'YTick'); set(gca, 'FontSize', 11);
-
+hold on;
+plot([29.6 33.5],[2.068 1.21],'--','LineWidth',1.5,'Color',[0.5 0.5 0.5])
+plot([30.4 54.2],[2.1 1.21],'--','LineWidth',1.5,'Color',[0.5 0.5 0.5])
+axes('Position',[.29 .65 .1 .1]); box on
+hnd1 = plot(rad2deg(FA_SSFP180), SSFP180_FM_0, '-', 'Color', cm(1,:), 'LineWidth',0.1); hold on;
+ylim([2.068 2.1]); xlim([29.6 30.4]);
+get(gca, 'XTick'); set(gca, 'FontSize', 11); get(gca, 'YTick'); set(gca, 'FontSize', 11)

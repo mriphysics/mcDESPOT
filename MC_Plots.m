@@ -1,8 +1,15 @@
-%% Generates MC box plots in Figures 5-6. %%
+%% Generates MC box plots in Figures 5-6 for HB. %%
 
 T1_F = 0.45; T1_S = 1.4; T2_F = 0.015; T2_S = 0.09; M0_F = 0.15; k_FS = 8; Delta = 0; PC1 = 0 + Delta; PC2 = pi + Delta;
 
 cm = [lines(4);lines(1);lines(1)];
+
+Solution_Bouhrara = squeeze(Solution_Bouhrara);
+Solution_Deoni = squeeze(Solution_Deoni);
+Solution_Wood = squeeze(Solution_Wood);
+Solution_Zhang = squeeze(Solution_Zhang);
+Solution_ASDeoni = squeeze(Solution_ASDeoni);
+Solution_ASRui = squeeze(Solution_ASRui);
 
 % T1S
 figure(1); subplot(3,2,1);
@@ -12,8 +19,8 @@ BP1 = boxplot(x,g,'Colors',cm,'Symbol','','Labels',{'S1 B1','S1 B2','S1 B3','S1 
 for ih=1:7
     set(BP1(ih,:),'LineWidth',2);
 end
-ylabel('T_{1S} (s)','FontSize',14); hline(T1_S,'k--'); ylim([1 2.5]); 
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+ylabel('T_{1S} (s)','FontSize',16); hline(T1_S,'k--'); ylim([1 2.5]); 
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 grid on; grid minor;
 
 % T1F
@@ -24,8 +31,8 @@ BP1 = boxplot(x,g,'Colors',cm,'Symbol','','Labels',{'S1 B1','S1 B2','S1 B3','S1 
 for ih=1:7
     set(BP1(ih,:),'LineWidth',2);
 end
-ylabel('T_{1F} (s)','FontSize',14); hline(T1_F,'k--');
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+ylabel('T_{1F} (s)','FontSize',16); hline(T1_F,'k--');
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 grid on; grid minor;
 
 % T2S
@@ -36,8 +43,8 @@ BP1 = boxplot(x,g,'Colors',cm,'Symbol','','Labels',{'S1 B1','S1 B2','S1 B3','S1 
 for ih=1:7
     set(BP1(ih,:),'LineWidth',2);
 end
-ylabel('T_{2S} (s)','FontSize',14); hline(T2_S,'k--');
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+ylabel('T_{2S} (s)','FontSize',16); hline(T2_S,'k--');
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 grid on; grid minor;
 
 % T2F
@@ -48,8 +55,8 @@ BP1 = boxplot(x,g,'Colors',cm,'Symbol','','Labels',{'S1 B1','S1 B2','S1 B3','S1 
 for ih=1:7
     set(BP1(ih,:),'LineWidth',2);
 end
-ylabel('T_{2F} (s)','FontSize',14); hline(T2_F,'k--');
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+ylabel('T_{2F} (s)','FontSize',16); hline(T2_F,'k--');
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 grid on; grid minor;
 
 % M0F
@@ -60,8 +67,8 @@ BP1 = boxplot(x,g,'Colors',cm,'Symbol','','Labels',{'S1 B1','S1 B2','S1 B3','S1 
 for ih=1:7
     set(BP1(ih,:),'LineWidth',2);
 end
-ylabel('MWF','FontSize',14); hline(M0_F,'k--');
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+ylabel('MWF','FontSize',16); hline(M0_F,'k--');
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 grid on; grid minor;
 
 % kFS
@@ -73,17 +80,19 @@ if size(Solution_Bouhrara,2) == 6
     for ih=1:7
         set(BP1(ih,:),'LineWidth',2);
     end
-    ylabel('k_{FS} (s^{-1})','FontSize',14); hline(k_FS,'k--');
-    get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+    ylabel('k_{FS} (s^{-1})','FontSize',16); hline(k_FS,'k--');
+    get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
     grid on; grid minor;
 end
 
-%% Generates MC search space plots in Figure 8 and SF 6. %%
+sgt = mtit('Monte Carlo Simulations Including Exchange (Model and Data)','FontSize',18);
 
-BWidth = 0.01;
+%% Generates MC search space plots in Figure 8 and SF 5. %%
+
+BWidth = 0.005; MaxAxis = 300; cm = lines(4);
 figure(1); subplot(3,1,1);
 histogram(M0F_Picked_T1,'BinWidth',BWidth,'EdgeColor', 'k', 'FaceColor', 'k', 'FaceAlpha', 0.5,'EdgeAlpha',0.5); hold on
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 
 [N1,E1] = histcounts(Solution_T1_Bouhrara(:,5),'BinWidth',BWidth); 
 plot(E1(2:end),N1,'o--','Color',cm(1,:),'LineWidth',2)
@@ -94,20 +103,20 @@ plot(E3(2:end),N3,'o--','Color',cm(3,:),'LineWidth',2)
 [N4,E4] = histcounts(Solution_T1_Zhang(:,5),'BinWidth',BWidth); 
 plot(E4(2:end),N4,'o--','Color',cm(4,:),'LineWidth',2)
 ll = legend('Top 1000 Solutions','SRC + B1','SRC + B2','SRC + B3','SRC + B4');
-ll.FontSize = 16; ll.AutoUpdate = 'off'; ll.Location = 'northwest'; legend('boxoff')
+ll.FontSize = 18; ll.AutoUpdate = 'off'; ll.Location = 'northwest'; legend('boxoff')
 
-line([0.25 0.25],[0 110],'LineStyle','--','Color','k','LineWidth',2)
-line([0 0],[0 110],'LineStyle',':','Color',cm(1,:),'LineWidth',2); line([0.5 0.5],[0 200],'LineStyle',':','Color',cm(1,:),'LineWidth',2)
-line([0 0],[0 110],'LineStyle',':','Color',cm(2,:),'LineWidth',2); line([0.35 0.35],[0 200],'LineStyle',':','Color',cm(2,:),'LineWidth',2)
-line([0.001 0.001],[0 110],'LineStyle',':','Color',cm(3,:),'LineWidth',2); line([0.35 0.35],[0 200],'LineStyle',':','Color',cm(3,:),'LineWidth',2)
-line([1e-7 1e-7],[0 110],'LineStyle',':','Color',cm(4,:),'LineWidth',2); line([0.3 0.3],[0 200],'LineStyle',':','Color',cm(4,:),'LineWidth',2)
+line([0.25 0.25],[0 MaxAxis-140],'LineStyle','--','Color','k','LineWidth',2)
+line([0 0],[0 MaxAxis-140],'LineStyle',':','Color',cm(1,:),'LineWidth',2); line([0.5 0.5],[0 MaxAxis-140],'LineStyle',':','Color',cm(1,:),'LineWidth',2)
+line([0 0],[0 MaxAxis-140],'LineStyle',':','Color',cm(2,:),'LineWidth',2); line([0.35 0.35],[0 MaxAxis-140],'LineStyle',':','Color',cm(2,:),'LineWidth',2)
+line([0.001 0.001],[0 MaxAxis-140],'LineStyle',':','Color',cm(3,:),'LineWidth',2); line([0.35 0.35],[0 MaxAxis-140],'LineStyle',':','Color',cm(3,:),'LineWidth',2)
+line([1e-7 1e-7],[0 MaxAxis-140],'LineStyle',':','Color',cm(4,:),'LineWidth',2); line([0.3 0.3],[0 MaxAxis-140],'LineStyle',':','Color',cm(4,:),'LineWidth',2)
 
-tt = title('WML','Position',[0.53409767679671,88.22515527950313,0]); tt.FontSize = 18; grid on; grid minor
-xlabel('MWF','FontSize',14); ylabel('Count','FontSize', 14); xlim([0 0.55]); ylim([0 200])
+tt = title('WML'); tt.FontSize = 20; grid on; grid minor
+xlabel('MWF','FontSize',16); ylabel('Count','FontSize', 16); xlim([0 0.55]); ylim([0 MaxAxis-140])
 
 subplot(3,1,2);
 histogram(M0F_Picked_T2,'BinWidth',BWidth, 'EdgeColor', 'k', 'FaceColor', 'k', 'FaceAlpha', 0.5,'EdgeAlpha',0.5); hold on
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 
 [N4,E4] = histcounts(Solution_T2_Bouhrara(:,5),'BinWidth',BWidth); 
 plot(E4(2:end),N4,'o--','Color',cm(1,:),'LineWidth',2)
@@ -118,18 +127,18 @@ plot(E6(2:end),N6,'o--','Color',cm(3,:),'LineWidth',2)
 [N7,E7] = histcounts(Solution_T2_Zhang(:,5),'BinWidth',BWidth); 
 plot(E7(2:end),N7,'o--','Color',cm(4,:),'LineWidth',2)
 
-line([0.175 0.175],[0 80],'LineStyle','--','Color','k','LineWidth',2) 
-line([0 0],[0 80],'LineStyle',':','Color',cm(1,:),'LineWidth',2); line([0.5 0.5],[0 200],'LineStyle',':','Color',cm(1,:),'LineWidth',2)
-line([0 0],[0 80],'LineStyle',':','Color',cm(2,:),'LineWidth',2); line([0.35 0.35],[0 200],'LineStyle',':','Color',cm(2,:),'LineWidth',2)
-line([0.001 0.001],[0 80],'LineStyle',':','Color',cm(3,:),'LineWidth',2); line([0.35 0.35],[0 200],'LineStyle',':','Color',cm(3,:),'LineWidth',2)
-line([1e-7 1e-7],[0 80],'LineStyle',':','Color',cm(4,:),'LineWidth',2); line([0.3 0.3],[0 200],'LineStyle',':','Color',cm(4,:),'LineWidth',2)
+line([0.175 0.175],[0 MaxAxis-140],'LineStyle','--','Color','k','LineWidth',2) 
+line([0 0],[0 MaxAxis-140],'LineStyle',':','Color',cm(1,:),'LineWidth',2); line([0.5 0.5],[0 MaxAxis-140],'LineStyle',':','Color',cm(1,:),'LineWidth',2)
+line([0 0],[0 MaxAxis-140],'LineStyle',':','Color',cm(2,:),'LineWidth',2); line([0.35 0.35],[0 MaxAxis-140],'LineStyle',':','Color',cm(2,:),'LineWidth',2)
+line([0.001 0.001],[0 MaxAxis-140],'LineStyle',':','Color',cm(3,:),'LineWidth',2); line([0.35 0.35],[0 MaxAxis-140],'LineStyle',':','Color',cm(3,:),'LineWidth',2)
+line([1e-7 1e-7],[0 MaxAxis-140],'LineStyle',':','Color',cm(4,:),'LineWidth',2); line([0.3 0.3],[0 MaxAxis-140],'LineStyle',':','Color',cm(4,:),'LineWidth',2)
 
-tt = title('INT','Position',[0.537976379194454,64.071611253196934,0]); tt.FontSize = 18; grid on; grid minor
-xlabel('MWF','FontSize',14); ylabel('Count','FontSize', 14); xlim([0 0.55]); ylim([0 200])
+tt = title('INT'); tt.FontSize = 20; grid on; grid minor
+xlabel('MWF','FontSize',16); ylabel('Count','FontSize', 16); xlim([0 0.55]); ylim([0 MaxAxis-140])
 
 subplot(3,1,3);
 histogram(M0F_Picked_T3,'BinWidth',BWidth, 'EdgeColor', 'k', 'FaceColor', 'k', 'FaceAlpha', 0.5,'EdgeAlpha',0.5); hold on
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 
 [N8,E8] = histcounts(Solution_T3_Bouhrara(:,5),'BinWidth',BWidth); 
 plot(E8(2:end),N8,'o--','Color',cm(1,:),'LineWidth',2)
@@ -140,11 +149,11 @@ plot(E10(2:end),N10,'o--','Color',cm(3,:),'LineWidth',2)
 [N11,E11] = histcounts(Solution_T3_Zhang(:,5),'BinWidth',BWidth); 
 plot(E11(2:end),N11,'o--','Color',cm(4,:),'LineWidth',2)
 
-line([0.1 0.1],[0 280],'LineStyle','--','Color','k','LineWidth',2)
-line([0 0],[0 280],'LineStyle',':','Color',cm(1,:),'LineWidth',2); line([0.5 0.5],[0 250],'LineStyle',':','Color',cm(1,:),'LineWidth',2)
-line([0 0],[0 280],'LineStyle',':','Color',cm(2,:),'LineWidth',2); line([0.35 0.35],[0 250],'LineStyle',':','Color',cm(2,:),'LineWidth',2)
-line([0.001 0.001],[0 280],'LineStyle',':','Color',cm(3,:),'LineWidth',2); line([0.35 0.35],[0 250],'LineStyle',':','Color',cm(3,:),'LineWidth',2)
-line([1e-7 1e-7],[0 280],'LineStyle',':','Color',cm(4,:),'LineWidth',2); line([0.3 0.3],[0 250],'LineStyle',':','Color',cm(4,:),'LineWidth',2)
+line([0.1 0.1],[0 MaxAxis],'LineStyle','--','Color','k','LineWidth',2)
+line([0 0],[0 MaxAxis],'LineStyle',':','Color',cm(1,:),'LineWidth',2); line([0.5 0.5],[0 MaxAxis],'LineStyle',':','Color',cm(1,:),'LineWidth',2)
+line([0 0],[0 MaxAxis],'LineStyle',':','Color',cm(2,:),'LineWidth',2); line([0.35 0.35],[0 MaxAxis],'LineStyle',':','Color',cm(2,:),'LineWidth',2)
+line([0.001 0.001],[0 MaxAxis],'LineStyle',':','Color',cm(3,:),'LineWidth',2); line([0.35 0.35],[0 MaxAxis],'LineStyle',':','Color',cm(3,:),'LineWidth',2)
+line([1e-7 1e-7],[0 MaxAxis],'LineStyle',':','Color',cm(4,:),'LineWidth',2); line([0.3 0.3],[0 MaxAxis],'LineStyle',':','Color',cm(4,:),'LineWidth',2)
 
-tt = title('GML','Position',[0.535649157755808,225.1397515527951,1.4210854715202e-14]); tt.FontSize = 18; grid on; grid minor
-xlabel('MWF','FontSize',14); ylabel('Count','FontSize', 14); xlim([0 0.55]); ylim([0 250])
+tt = title('GML'); tt.FontSize = 20; grid on; grid minor
+xlabel('MWF','FontSize',16); ylabel('Count','FontSize', 16); xlim([0 0.55]); ylim([0 MaxAxis])

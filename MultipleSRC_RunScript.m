@@ -1,4 +1,4 @@
-%%% Generates Supplementary Figure 1. Individual parameters are changed using HB as a basis and MC performed. %%%
+%%% Generates data for old Supplementary Figure 1. Individual parameters are changed using HB as a basis and MC performed. %%%
 
 close all; clear all
 
@@ -57,56 +57,56 @@ subplot(2,3,1);
 histogram(Solution_2(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(1,:)); hold on;
 histogram(Solution_1(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(2,:)); 
 histogram(Solution_3(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(3,:));
-xlabel('Estimated MWF','FontSize',14); ylabel('Count','FontSize',14); 
+xlabel('Estimated MWF','FontSize',16); ylabel('Count','FontSize',16); 
 line([M0F_2 M0F_2],[0 200],'LineStyle','--','Color',cm(1,:),'LineWidth',2) 
 line([M0F_1 M0F_1],[0 200],'LineStyle','--','Color',cm(2,:),'LineWidth',2) 
 line([M0F_3 M0F_3],[0 200],'LineStyle','--','Color',cm(3,:),'LineWidth',2) 
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 grid on; grid minor;
-tt = title('Different GT MWF'); tt.FontSize = 16;
+tt = title('Different GT MWF'); tt.FontSize = 18;
 
 subplot(2,3,2);
 histogram(Solution_4(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(1,:)); hold on;
 histogram(Solution_1(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(2,:)); 
 histogram(Solution_5(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(3,:));
-xlabel('Estimated MWF','FontSize',14); ylabel('Count','FontSize',14); line([M0F_1 M0F_1],[0 200],'LineStyle','--','Color',cm(2,:),'LineWidth',2) 
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+xlabel('Estimated MWF','FontSize',16); ylabel('Count','FontSize',16); line([M0F_1 M0F_1],[0 200],'LineStyle','--','Color',cm(2,:),'LineWidth',2) 
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 grid on; grid minor;
-tt = title('Different GT k_{FS}'); tt.FontSize = 16;
+tt = title('Different GT k_{FS}'); tt.FontSize = 18;
 
 subplot(2,3,3);
 histogram(Solution_6(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(1,:)); hold on;
 histogram(Solution_1(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(2,:)); 
 histogram(Solution_7(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(3,:));
-xlabel('Estimated MWF','FontSize',14); ylabel('Count','FontSize',14); line([M0F_1 M0F_1],[0 250],'LineStyle','--','Color',cm(2,:),'LineWidth',2)  
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+xlabel('Estimated MWF','FontSize',16); ylabel('Count','FontSize',16); line([M0F_1 M0F_1],[0 250],'LineStyle','--','Color',cm(2,:),'LineWidth',2)  
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 grid on; grid minor;
-ll = legend('0.75 \times HBV','HBV','1.25 \times HBV'); ll.FontSize = 16; legend('boxoff')
-tt = title('Different GT T_{1S}'); tt.FontSize = 16;
+ll = legend('0.75 \times HBV','HBV','1.25 \times HBV'); ll.FontSize = 18; legend('boxoff')
+tt = title('Different GT T_{1S}'); tt.FontSize = 18;
 
 subplot(2,3,4);
 histogram(Solution_8(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(1,:)); hold on;
 histogram(Solution_1(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(2,:)); 
 histogram(Solution_9(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(3,:));
-xlabel('Estimated MWF','FontSize',14); ylabel('Count','FontSize',14); line([M0F_1 M0F_1],[0 200],'LineStyle','--','Color',cm(2,:),'LineWidth',2) 
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+xlabel('Estimated MWF','FontSize',16); ylabel('Count','FontSize',16); line([M0F_1 M0F_1],[0 200],'LineStyle','--','Color',cm(2,:),'LineWidth',2) 
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 grid on; grid minor;
-tt = title('Different GT T_{2S}'); tt.FontSize = 16;
+tt = title('Different GT T_{2S}'); tt.FontSize = 18;
 
 subplot(2,3,5);
 histogram(Solution_10(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(1,:)); hold on;
 histogram(Solution_1(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(2,:)); 
 histogram(Solution_11(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(3,:));
-xlabel('Estimated MWF','FontSize',14); ylabel('Count','FontSize',14); line([M0F_1 M0F_1],[0 200],'LineStyle','--','Color',cm(2,:),'LineWidth',2) 
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+xlabel('Estimated MWF','FontSize',16); ylabel('Count','FontSize',16); line([M0F_1 M0F_1],[0 200],'LineStyle','--','Color',cm(2,:),'LineWidth',2) 
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 grid on; grid minor;
-tt = title('Different GT T_{1F}'); tt.FontSize = 16;
+tt = title('Different GT T_{1F}'); tt.FontSize = 18;
 
 subplot(2,3,6);
 histogram(Solution_12(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(1,:)); hold on;
 histogram(Solution_1(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(2,:)); 
 histogram(Solution_13(:,5),'BinWidth',0.02,'FaceAlpha',0.7,'EdgeColor','k','FaceColor',cm(3,:));
-xlabel('Estimated MWF','FontSize',14); ylabel('Count','FontSize',14); line([M0F_1 M0F_1],[0 200],'LineStyle','--','Color',cm(2,:),'LineWidth',2) 
-get(gca, 'XTick'); set(gca, 'FontSize', 14); get(gca, 'YTick'); set(gca, 'FontSize', 14);
+xlabel('Estimated MWF','FontSize',16); ylabel('Count','FontSize',16); line([M0F_1 M0F_1],[0 200],'LineStyle','--','Color',cm(2,:),'LineWidth',2) 
+get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
 grid on; grid minor;
-tt = title('Different GT T_{2F}'); tt.FontSize = 16;
+tt = title('Different GT T_{2F}'); tt.FontSize = 18;

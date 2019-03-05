@@ -1,9 +1,9 @@
 %%% Generates search space cuts either at SRC solution point or
-%%% ground-truth for Figure 3. %%%
+%%% ground-truth for Figures 3, 4 and SF3. %%%
 
 close all; clear all;
 
-acquisition = 'Bouhrara';
+acquisition = 'Deoni';
 exchange = 'on';
 searchspacecut = 'SRC';
 
@@ -33,7 +33,7 @@ SSFP_Data_180 = SSFP_SteadyState(FA_SSFP180, TR_SSFP, PC2,'T1_S',T1_S,'T2_S',T2_
 
 SSFP_Data = [SSFP_Data_0 ; SSFP_Data_180];
 
-SNR = 30; Sigma = mean(SPGR_Data)/SNR;
+SNR = 100; Sigma = mean(SPGR_Data)/SNR;
 
 SPGR_Data_Norm = SPGR_Data./mean(SPGR_Data);
 SSFP_Data_Norm = SSFP_Data./mean(SSFP_Data);
