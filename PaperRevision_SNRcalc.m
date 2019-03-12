@@ -63,7 +63,7 @@ mask_rep = repmat(mask,[1 1 1 10]);
 % mask_rep(:,:,:,1)=0;
 signaldist = alldata(mask_rep);
 
-% Crude signal estimate 2.
+% Crude signal estimate v2.
 % imagesc(squeeze(abs(SPGRFA14_Image(140,:,:))))
 % mask = roipoly;
 

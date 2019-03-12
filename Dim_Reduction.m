@@ -15,15 +15,15 @@ SP_kPCA_Matrix_Mod = [SP_kPCA_Matrix ; [T1, T2, M0]]; SP_Values_Top_Mod = [SP_Va
 [E_MappedData, E_Mapping] = compute_mapping(E_kPCA_Matrix_Mod(:,1:5), 'KernelPCA', 3);
 [NE_MappedData, NE_Mapping] = compute_mapping(NE_kPCA_Matrix_Mod(:,1:5), 'KernelPCA', 3);
 
-%% Plot results for model comparison.
+%% Plot results for model comparison. Figure 2.
 
 az = 1.590000000000001e+02; el = 34.800000000000033;
 
 figure(1)
 colormap(flipud(magma))
 subplot(1,3,1)
-scatter3(SP_kPCA_Matrix_Mod(:,1),SP_kPCA_Matrix_Mod(:,2),SP_kPCA_Matrix_Mod(:,3),repmat(50,numel(SP_kPCA_Matrix_Mod(:,1)),1),(SP_Values_Top_Mod),'filled','MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6); tt = title('Single-Pool'); tt.FontSize = 18; axis square; grid on;
-xlabel('T_{1} (s)', 'FontSize', 18); ylabel('T_{2} (s)', 'FontSize', 18); zlabel('M_{0}', 'FontSize', 18);
+scatter3(SP_kPCA_Matrix_Mod(:,1),SP_kPCA_Matrix_Mod(:,2),SP_kPCA_Matrix_Mod(:,3),repmat(50,numel(SP_kPCA_Matrix_Mod(:,1)),1),(SP_Values_Top_Mod),'filled','MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6); tt = title('Single-Pool'); tt.FontSize = 22; axis square; grid on;
+xlabel('T_{1} (s)', 'FontSize', 18); ylabel('T_{2} (s)', 'FontSize', 20); zlabel('M_{0}', 'FontSize', 20);
 hold on; caxis([0 1])
 plot3(SP_kPCA_Matrix_Mod(:,1),SP_kPCA_Matrix_Mod(:,2),ones(size(SP_kPCA_Matrix_Mod(:,3))).* min(SP_kPCA_Matrix_Mod(:,3)),'.','Color',[0.8 0.8 0.8],'MarkerSize',10);
 plot3(ones(size(SP_kPCA_Matrix_Mod(:,1))).* min(SP_kPCA_Matrix_Mod(:,1)),SP_kPCA_Matrix_Mod(:,2),SP_kPCA_Matrix_Mod(:,3),'.','Color',[0.8 0.8 0.8],'MarkerSize',10);
@@ -32,13 +32,13 @@ scatter3(SP_kPCA_Matrix_Mod(1001,1),SP_kPCA_Matrix_Mod(1001,2),SP_kPCA_Matrix_Mo
 scatter3(SP_kPCA_Matrix_Mod(1001,1),SP_kPCA_Matrix_Mod(1001,2),min(SP_kPCA_Matrix_Mod(:,3)),75,'k','diamond','LineWidth',5);
 scatter3(min(SP_kPCA_Matrix_Mod(:,1)),SP_kPCA_Matrix_Mod(1001,2),SP_kPCA_Matrix_Mod(1001,3),75,'k','diamond','LineWidth',5);
 scatter3(SP_kPCA_Matrix_Mod(1001,1),min(SP_kPCA_Matrix_Mod(:,2)),SP_kPCA_Matrix_Mod(1001,3),75,'k','diamond','LineWidth',5);
-get(gca, 'XTick'); set(gca, 'FontSize', 18); get(gca, 'YTick'); set(gca, 'FontSize', 18);
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20);
 view(az,el);
-text(0.02,0.98,'(a)','Units','Normalized','VerticalAlignment','Top','FontSize',18)
+text(0.02,0.98,'(a)','Units','Normalized','VerticalAlignment','Top','FontSize',20)
 
 subplot(1,3,2)
-scatter3(NE_MappedData(:,1),NE_MappedData(:,2),NE_MappedData(:,3),repmat(50,numel(NE_MappedData(:,1)),1),(NE_Values_Top_Mod),'filled','MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6); tt = title('2-Pool (Zero Exchange)'); tt.FontSize = 18; axis square; grid on;
-xlabel('Dim 1', 'FontSize', 18); ylabel('Dim 2', 'FontSize', 18); zlabel('Dim 3', 'FontSize', 18);
+scatter3(NE_MappedData(:,1),NE_MappedData(:,2),NE_MappedData(:,3),repmat(50,numel(NE_MappedData(:,1)),1),(NE_Values_Top_Mod),'filled','MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6); tt = title('2-Pool (Zero Exchange)'); tt.FontSize = 22; axis square; grid on;
+xlabel('Dim 1', 'FontSize', 18); ylabel('Dim 2', 'FontSize', 20); zlabel('Dim 3', 'FontSize', 20);
 hold on; caxis([0 1])
 plot3(NE_MappedData(:,1),NE_MappedData(:,2),ones(size(NE_MappedData(:,3))).* min(NE_MappedData(:,3)),'.','Color',[0.8 0.8 0.8],'MarkerSize',10);
 plot3(ones(size(NE_MappedData(:,1))).* min(NE_MappedData(:,1)),NE_MappedData(:,2),NE_MappedData(:,3),'.','Color',[0.8 0.8 0.8],'MarkerSize',10);
@@ -47,13 +47,13 @@ scatter3(NE_MappedData(1001,1),NE_MappedData(1001,2),NE_MappedData(1001,3),100,[
 scatter3(NE_MappedData(1001,1),NE_MappedData(1001,2),min(NE_MappedData(:,3)),75,'k','diamond','LineWidth',5);
 scatter3(min(NE_MappedData(:,1)),NE_MappedData(1001,2),NE_MappedData(1001,3),75,'k','diamond','LineWidth',5);
 scatter3(NE_MappedData(1001,1),min(NE_MappedData(:,2)),NE_MappedData(1001,3),75,'k','diamond','LineWidth',5);
-get(gca, 'XTick'); set(gca, 'FontSize', 18); get(gca, 'YTick'); set(gca, 'FontSize', 18);
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20);
 view(az,el);
-text(0.02,0.98,'(b)','Units','Normalized','VerticalAlignment','Top','FontSize',18)
+text(0.02,0.98,'(b)','Units','Normalized','VerticalAlignment','Top','FontSize',20)
 
 subplot(1,3,3) 
-scatter3(E_MappedData(:,1),E_MappedData(:,2),E_MappedData(:,3),repmat(50,numel(E_MappedData(:,1)),1),(E_Values_Top_Mod),'filled','MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6); tt = title('2-Pool (Non-Zero Exchange)'); tt.FontSize = 18; axis square; grid on;
-xlabel('Dim 1', 'FontSize', 18); ylabel('Dim 2', 'FontSize', 18); zlabel('Dim 3', 'FontSize', 18);
+scatter3(E_MappedData(:,1),E_MappedData(:,2),E_MappedData(:,3),repmat(50,numel(E_MappedData(:,1)),1),(E_Values_Top_Mod),'filled','MarkerFaceAlpha',0.6,'MarkerEdgeAlpha',0.6); tt = title('2-Pool (Non-Zero Exchange)'); tt.FontSize = 22; axis square; grid on;
+xlabel('Dim 1', 'FontSize', 18); ylabel('Dim 2', 'FontSize', 20); zlabel('Dim 3', 'FontSize', 20);
 hold on; caxis([0 1])
 plot3(E_MappedData(:,1),E_MappedData(:,2),ones(size(E_MappedData(:,3))).* min(E_MappedData(:,3)),'.','Color',[0.8 0.8 0.8],'MarkerSize',10); hold on
 plot3(ones(size(E_MappedData(:,1))).* min(E_MappedData(:,1)),E_MappedData(:,2),E_MappedData(:,3),'.','Color',[0.8 0.8 0.8],'MarkerSize',10);
@@ -62,10 +62,10 @@ scatter3(E_MappedData(1001,1),E_MappedData(1001,2),E_MappedData(1001,3),100,[0 0
 scatter3(E_MappedData(1001,1),E_MappedData(1001,2),min(E_MappedData(:,3)),75,'k','diamond','LineWidth',5);
 scatter3(min(E_MappedData(:,1)),E_MappedData(1001,2),E_MappedData(1001,3),75,'k','diamond','LineWidth',5);
 scatter3(E_MappedData(1001,1),min(E_MappedData(:,2)),E_MappedData(1001,3),75,'k','diamond','LineWidth',5);
-get(gca, 'XTick'); set(gca, 'FontSize', 18); get(gca, 'YTick'); set(gca, 'FontSize', 18);
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20);
 view(az,el);
-text(0.02,0.98,'(c)','Units','Normalized','VerticalAlignment','Top','FontSize',18)
+text(0.02,0.98,'(c)','Units','Normalized','VerticalAlignment','Top','FontSize',20)
 
-hcb = colorbar('Position',[0.915846994535519,0.381118881118881,0.012021857923497,0.452214452214452],'FontSize',16);
+hcb = colorbar('Position',[0.915846994535519,0.381118881118881,0.012021857923497,0.452214452214452],'FontSize',18);
 colorTitleHandle = get(hcb,'Title'); titleString = '\eta'; 
-set(colorTitleHandle,'String',titleString,'FontSize',30,'Position',[-12.750000000000224,287.9506993006992,0]);
+set(colorTitleHandle,'String',titleString,'FontSize',34,'Position',[-12.750000000000224,287.9506993006992,0]);

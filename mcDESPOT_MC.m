@@ -1,4 +1,4 @@
-%%% Performs MC simulations for box plots in Figures 5-8. %%%
+%%% Performs MC simulations for box plots in Figures 5-7, 9 and SF 2. %%%
 
 close all; clear all;
 

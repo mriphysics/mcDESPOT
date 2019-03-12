@@ -1,4 +1,4 @@
-%%% Performs MC simulations for Supplementary Figure 1. %%%
+%%% Performs MC simulations for (new) Supplementary Figure 1. %%%
 
 close all; clear all;
 
@@ -18,7 +18,7 @@ SSFP_Data_180 = SSFP_SteadyState(FA_SSFP180, TR_SSFP, PC2,'T1_S',T1_S,'T2_S',T2_
 SSFP_Data = [SSFP_Data_0 ; SSFP_Data_180];
 
 % Define SNR and define wrt mean SPGR signal.
-SNR = [50,100,200];
+SNR = [30,50,100,200];
 
 Solution_Bouhrara = zeros(length(SNR),Realisations,Params);
 
@@ -52,9 +52,6 @@ end
 
 %%
 
-% Solution_Bouhrara_All = cat(1,Solution_Bouhrara,Solution_Bouhrara100);
-% Solution_Bouhrara_All = Solution_Bouhrara_All([1,2,4,3],:,:);
-
 figure(1)
 cm = colormap(lines(4));
 subplot(2,3,1);
@@ -63,10 +60,10 @@ histogram(Solution_Bouhrara(3,:,1),'BinWidth',0.05,'EdgeColor',cm(2,:),'DisplayS
 histogram(Solution_Bouhrara(2,:,1),'BinWidth',0.05,'EdgeColor',cm(3,:),'DisplayStyle','stairs','LineWidth',2); 
 histogram(Solution_Bouhrara(1,:,1),'BinWidth',0.05,'EdgeColor',cm(4,:),'DisplayStyle','stairs','LineWidth',2);
 line([T1_S T1_S],[0 400],'LineStyle','--','Color','k','LineWidth',2) 
-xlabel('T_{1S} (s)','FontSize',16); ylabel('Count','FontSize',16); 
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
+xlabel('T_{1S} (s)','FontSize',20); ylabel('Count','FontSize',20); 
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20);
 grid on; grid minor;
-ll = legend('200','100','50','30'); ll.FontSize = 18; title(ll,'SNR','FontSize',20);
+ll = legend('200','100','50','30'); ll.FontSize = 18; title(ll,'SNR','FontSize',22);
 
 subplot(2,3,2);
 histogram(Solution_Bouhrara(4,:,2),'BinWidth',0.02,'EdgeColor',cm(1,:),'DisplayStyle','stairs','LineWidth',2); hold on;
@@ -74,8 +71,8 @@ histogram(Solution_Bouhrara(3,:,2),'BinWidth',0.02,'EdgeColor',cm(2,:),'DisplayS
 histogram(Solution_Bouhrara(2,:,2),'BinWidth',0.02,'EdgeColor',cm(3,:),'DisplayStyle','stairs','LineWidth',2); 
 histogram(Solution_Bouhrara(1,:,2),'BinWidth',0.02,'EdgeColor',cm(4,:),'DisplayStyle','stairs','LineWidth',2);
 line([T1_F T1_F],[0 300],'LineStyle','--','Color','k','LineWidth',2) 
-xlabel('T_{1F} (s)','FontSize',16); ylabel('Count','FontSize',16); 
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
+xlabel('T_{1F} (s)','FontSize',20); ylabel('Count','FontSize',20); 
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20);
 grid on; grid minor;
 
 subplot(2,3,3);
@@ -84,8 +81,8 @@ histogram(Solution_Bouhrara(3,:,3),'BinWidth',0.005,'EdgeColor',cm(2,:),'Display
 histogram(Solution_Bouhrara(2,:,3),'BinWidth',0.005,'EdgeColor',cm(3,:),'DisplayStyle','stairs','LineWidth',2); 
 histogram(Solution_Bouhrara(1,:,3),'BinWidth',0.005,'EdgeColor',cm(4,:),'DisplayStyle','stairs','LineWidth',2);
 line([T2_S T2_S],[0 500],'LineStyle','--','Color','k','LineWidth',2) 
-xlabel('T_{2S} (s)','FontSize',16); ylabel('Count','FontSize',16); 
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
+xlabel('T_{2S} (s)','FontSize',20); ylabel('Count','FontSize',20); 
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20);
 grid on; grid minor;
 
 subplot(2,3,4);
@@ -94,8 +91,8 @@ histogram(Solution_Bouhrara(3,:,4),'BinWidth',0.001,'EdgeColor',cm(2,:),'Display
 histogram(Solution_Bouhrara(2,:,4),'BinWidth',0.001,'EdgeColor',cm(3,:),'DisplayStyle','stairs','LineWidth',2); 
 histogram(Solution_Bouhrara(1,:,4),'BinWidth',0.001,'EdgeColor',cm(4,:),'DisplayStyle','stairs','LineWidth',2);
 line([T2_F T2_F],[0 400],'LineStyle','--','Color','k','LineWidth',2) 
-xlabel('T_{2F} (s)','FontSize',16); ylabel('Count','FontSize',16); 
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
+xlabel('T_{2F} (s)','FontSize',20); ylabel('Count','FontSize',20); 
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20);
 grid on; grid minor;
 
 subplot(2,3,5);
@@ -104,8 +101,8 @@ histogram(Solution_Bouhrara(3,:,5),'BinWidth',0.02,'EdgeColor',cm(2,:),'DisplayS
 histogram(Solution_Bouhrara(2,:,5),'BinWidth',0.02,'EdgeColor',cm(3,:),'DisplayStyle','stairs','LineWidth',2); 
 histogram(Solution_Bouhrara(1,:,5),'BinWidth',0.02,'EdgeColor',cm(4,:),'DisplayStyle','stairs','LineWidth',2);
 line([M0_F M0_F],[0 500],'LineStyle','--','Color','k','LineWidth',2) 
-xlabel('MWF','FontSize',16); ylabel('Count','FontSize',16); 
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
+xlabel('MWF','FontSize',20); ylabel('Count','FontSize',20); 
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20);
 grid on; grid minor;
 
 subplot(2,3,6);
@@ -114,6 +111,6 @@ histogram(Solution_Bouhrara(3,:,6),'BinWidth',1,'EdgeColor',cm(2,:),'DisplayStyl
 histogram(Solution_Bouhrara(2,:,6),'BinWidth',1,'EdgeColor',cm(3,:),'DisplayStyle','stairs','LineWidth',2); 
 histogram(Solution_Bouhrara(1,:,6),'BinWidth',1,'EdgeColor',cm(4,:),'DisplayStyle','stairs','LineWidth',2);
 line([k_FS k_FS],[0 400],'LineStyle','--','Color','k','LineWidth',2) 
-xlabel('k_{FS} (s)','FontSize',16); ylabel('Count','FontSize',16); 
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
+xlabel('k_{FS} (s)','FontSize',20); ylabel('Count','FontSize',20); 
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20);
 grid on; grid minor;

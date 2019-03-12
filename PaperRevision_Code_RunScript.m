@@ -1,4 +1,4 @@
-%%% Test of SRC bias. Generates data for Figure 8. %%%
+%%% Test of SRC bias. Generates data for (new) Figure 8. %%%
 
 %% Different MWF.
 
@@ -13,7 +13,7 @@ Realisations = 1000; Trials = 40000; Iterations = 30; N = 50; Runs = 1;
 
 Solution_Bouhrara_MWF = zeros(length(M0_F),Realisations,Params);
 
-delete(gcp('nocreate')); c = parcluster('local'); c.NumWorkers = 32; parpool(c, c.NumWorkers);
+delete(gcp('nocreate')); c = parcluster('local'); c.NumWorkers = 8; parpool(c, c.NumWorkers);
 
 for ii = 1:length(M0_F)
     
@@ -44,7 +44,7 @@ for ii = 1:length(M0_F)
         SSFP_Data_Norm = SSFP_Data_Noisy./mean(SSFP_Data_Noisy);
         Data = [SPGR_Data_Norm ; SSFP_Data_Norm];
 
-        [Solution_Bouhrara_MWF(ii,tt,:), ~, ~] = SRC_SimB(Trials, Iterations, N, Runs, FA_SPGR, FA_SSFP0, FA_SSFP180, TR_SPGR, TR_SSFP, Data);
+        [Solution_Bouhrara_MWF(ii,tt,:), ~, ~] = SRC_SimD(Trials, Iterations, N, Runs, FA_SPGR, FA_SSFP0, FA_SSFP180, TR_SPGR, TR_SSFP, Data);
         
     end
     
@@ -65,7 +65,7 @@ Realisations = 1000; Trials = 40000; Iterations = 30; N = 50; Runs = 1;
 
 Solution_Bouhrara_T1 = zeros(length(T1_S),Realisations,Params);
 
-delete(gcp('nocreate')); c = parcluster('local'); c.NumWorkers = 32; parpool(c, c.NumWorkers);
+delete(gcp('nocreate')); c = parcluster('local'); c.NumWorkers = 8; parpool(c, c.NumWorkers);
 
 for ii = 1:length(T1_S)
     
@@ -96,7 +96,7 @@ for ii = 1:length(T1_S)
         SSFP_Data_Norm = SSFP_Data_Noisy./mean(SSFP_Data_Noisy);
         Data = [SPGR_Data_Norm ; SSFP_Data_Norm];
 
-        [Solution_Bouhrara_T1(ii,tt,:), ~, ~] = SRC_SimB(Trials, Iterations, N, Runs, FA_SPGR, FA_SSFP0, FA_SSFP180, TR_SPGR, TR_SSFP, Data);
+        [Solution_Bouhrara_T1(ii,tt,:), ~, ~] = SRC_SimD(Trials, Iterations, N, Runs, FA_SPGR, FA_SSFP0, FA_SSFP180, TR_SPGR, TR_SSFP, Data);
         
     end
     
@@ -117,7 +117,7 @@ Realisations = 1000; Trials = 40000; Iterations = 30; N = 50; Runs = 1;
 
 Solution_Bouhrara_T2 = zeros(length(T2_S),Realisations,Params);
 
-delete(gcp('nocreate')); c = parcluster('local'); c.NumWorkers = 32; parpool(c, c.NumWorkers);
+delete(gcp('nocreate')); c = parcluster('local'); c.NumWorkers = 8; parpool(c, c.NumWorkers);
 
 for ii = 1:length(T2_S)
     
@@ -148,7 +148,7 @@ for ii = 1:length(T2_S)
         SSFP_Data_Norm = SSFP_Data_Noisy./mean(SSFP_Data_Noisy);
         Data = [SPGR_Data_Norm ; SSFP_Data_Norm];
 
-        [Solution_Bouhrara_T2(ii,tt,:), ~, ~] = SRC_SimB(Trials, Iterations, N, Runs, FA_SPGR, FA_SSFP0, FA_SSFP180, TR_SPGR, TR_SSFP, Data);
+        [Solution_Bouhrara_T2(ii,tt,:), ~, ~] = SRC_SimD(Trials, Iterations, N, Runs, FA_SPGR, FA_SSFP0, FA_SSFP180, TR_SPGR, TR_SSFP, Data);
         
     end
     
@@ -166,9 +166,9 @@ subplot(2,3,1)
 errorbar(linspace(0,0.25,8),mean(Solution_Bouhrara_MWF(:,:,5),2),std(Solution_Bouhrara_MWF(:,:,5),0,2),'Marker','.','MarkerSize',20,'LineStyle','-','LineWidth',2,'Color',cm(5,:));
 hold on;
 plot(linspace(0,0.25,8),linspace(0,0.25,8),'LineStyle','--','Color','k','LineWidth',2)
-grid on; grid minor;
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
-xlabel('MWF','FontSize',16); ylabel('Estimated MWF','FontSize',16)
+grid on; grid minor; xlim([0 0.25])
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20);
+xlabel('MWF','FontSize',20); ylabel('Estimated MWF','FontSize',20)
 
 subplot(2,3,4)
 errorbar(linspace(0,0.25,8),(mean(Solution_Bouhrara_MWF(:,:,1),2)/T1_S),(std(Solution_Bouhrara_MWF(:,:,1),0,2)/T1_S),'Marker','.','MarkerSize',20,'LineStyle','-','LineWidth',2,'Color',cm(1,:));
@@ -178,20 +178,20 @@ errorbar(linspace(0,0.25,8),(mean(Solution_Bouhrara_MWF(:,:,3),2)/T2_S),(std(Sol
 errorbar(linspace(0,0.25,8),(mean(Solution_Bouhrara_MWF(:,:,4),2)/T2_F),(std(Solution_Bouhrara_MWF(:,:,4),0,2)/T2_F),'Marker','.','MarkerSize',20,'LineStyle','-','LineWidth',2,'Color',cm(4,:));
 errorbar(linspace(0,0.25,8),(mean(Solution_Bouhrara_MWF(:,:,6),2)/k_FS),(std(Solution_Bouhrara_MWF(:,:,6),0,2)/k_FS),'Marker','.','MarkerSize',20,'LineStyle','-','LineWidth',2,'Color',cm(6,:));
 plot(linspace(0,0.25,8),linspace(1,1,8),'LineStyle','--','Color','k','LineWidth',2)
-grid on; grid minor;
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
-xlabel('MWF','FontSize',16); ylabel('Normalised Estimates','FontSize',16)
+grid on; grid minor; xlim([0 0.25])
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20);
+xlabel('MWF','FontSize',20); ylabel('Normalised Estimates','FontSize',20)
 
 T1_F = 0.45; T2_F = 0.015; T2_S = 0.09; M0_F = 0.15; k_FS = 8; 
 figure(1)
 subplot(2,3,2)
 errorbar(linspace(1.0,2.0,8),mean(Solution_Bouhrara_T1(:,:,1),2),std(Solution_Bouhrara_T1(:,:,1),0,2),'Marker','.','MarkerSize',20,'LineStyle','-','LineWidth',2,'Color',cm(1,:));
-ll = legend('T_{1S}'); ll.AutoUpdate = 'off'; ll.FontSize = 16; legend boxoff; ll.Orientation = 'horizontal'; ll.Position = [0.418923611669905,0.450723559781453,0.045312499441206,0.061320753076916];
+ll = legend('T_{1S}'); ll.AutoUpdate = 'off'; ll.FontSize = 22; legend boxoff; ll.Orientation = 'horizontal'; ll.Position = [0.028282318749481,0.558311319453932,0.051562499254942,0.076023389721474];
 hold on;
 plot(linspace(1.0,2.0,8),linspace(1.0,2.0,8),'LineStyle','--','Color','k','LineWidth',2)
 grid on; grid minor;
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
-xlabel('T_{1S} (s)','FontSize',16); ylabel('Estimated T_{1S}','FontSize',16)
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20);
+xlabel('T_{1S} (s)','FontSize',20); ylabel('Estimated T_{1S}','FontSize',20)
 
 subplot(2,3,5)
 errorbar(linspace(1.0,2.0,8),(mean(Solution_Bouhrara_T1(:,:,2),2)/T1_F),(std(Solution_Bouhrara_T1(:,:,2),0,2)/T1_F),'Marker','.','MarkerSize',20,'LineStyle','-','LineWidth',2,'Color',cm(2,:));
@@ -202,9 +202,9 @@ errorbar(linspace(1.0,2.0,8),(mean(Solution_Bouhrara_T1(:,:,5),2)/M0_F),(std(Sol
 errorbar(linspace(1.0,2.0,8),(mean(Solution_Bouhrara_T1(:,:,6),2)/k_FS),(std(Solution_Bouhrara_T1(:,:,6),0,2)/k_FS),'Marker','.','MarkerSize',20,'LineStyle','-','LineWidth',2,'Color',cm(6,:));
 plot(linspace(1.0,2.0,8),linspace(1,1,8),'LineStyle','--','Color','k','LineWidth',2)
 grid on; grid minor;
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
-xlabel('T_{1S} (s)','FontSize',16); ylabel('Normalised Estimates','FontSize',16)
-ll = legend('T_{1F}','T_{2S}','T_{2F}','MWF','k_{FS}'); ll.FontSize = 16; legend boxoff; ll.Orientation = 'horizontal'; ll.Position = [0.46371528075801,0.450643490833568,0.226562497019768,0.061320753076916]; %ylim([0.8 2])
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20);
+xlabel('T_{1S} (s)','FontSize',20); ylabel('Normalised Estimates','FontSize',20)
+ll = legend('T_{1F}','T_{2S}','T_{2F}','MWF','k_{FS}'); ll.FontSize = 22; legend boxoff; ll.Orientation = 'vertical'; ll.Position = [-0.0524,0.2709,0.2266,0.3406]; %ylim([0.8 2])
 
 T1_F = 0.45; T1_S = 1.4; T2_F = 0.015; M0_F = 0.15; k_FS = 8;  
 figure(1)
@@ -213,8 +213,8 @@ errorbar(linspace(0.04,0.1,8),mean(Solution_Bouhrara_T2(:,:,3),2),std(Solution_B
 hold on;
 plot(linspace(0.04,0.1,8),linspace(0.04,0.1,8),'LineStyle','--','Color','k','LineWidth',2)
 grid on; grid minor;
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
-xlabel('T_{2S} (s)','FontSize',16); ylabel('Estimated T_{2S}','FontSize',16)
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20);
+xlabel('T_{2S} (s)','FontSize',20); ylabel('Estimated T_{2S}','FontSize',20)
 
 subplot(2,3,6)
 errorbar(linspace(0.04,0.1,8),(mean(Solution_Bouhrara_T2(:,:,1),2)/T1_S),(std(Solution_Bouhrara_T2(:,:,1),0,2)/T1_S),'Marker','.','MarkerSize',20,'LineStyle','-','LineWidth',2,'Color',cm(1,:));
@@ -225,5 +225,5 @@ errorbar(linspace(0.04,0.1,8),(mean(Solution_Bouhrara_T2(:,:,5),2)/M0_F),(std(So
 errorbar(linspace(0.04,0.1,8),(mean(Solution_Bouhrara_T2(:,:,6),2)/k_FS),(std(Solution_Bouhrara_T2(:,:,6),0,2)/k_FS),'Marker','.','MarkerSize',20,'LineStyle','-','LineWidth',2,'Color',cm(6,:));
 plot(linspace(0.04,0.1,8),linspace(1,1,8),'LineStyle','--','Color','k','LineWidth',2)
 grid on; grid minor;
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16);
-xlabel('T_{2S} (s)','FontSize',16); ylabel('Normalised Estimates','FontSize',16)
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20);
+xlabel('T_{2S} (s)','FontSize',20); ylabel('Normalised Estimates','FontSize',20)

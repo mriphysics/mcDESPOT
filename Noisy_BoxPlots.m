@@ -24,16 +24,17 @@ for ih=1:7
 end
 ylabel('T_{1S} (s)','FontSize',16); hline(T1_S,'k--'); ylim([0.75 1.4])
 xticks([]); xticklabels({})
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16); grid on; grid minor;
-hLegend = legend(findall(gca,'Tag','Box'), {'B1','B2','B3','B4'},'Position',[0.732422588410056,0.768849862506305,0.169945353302148,0.041379309276055]); hLegend.FontSize = 16; hLegend.Orientation = 'horizontal';
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20); grid on; grid minor;
+hLegend = legend(findall(gca,'Tag','Box'), {'B1','B2','B3','B4'},'Position',[0.732422588410056,0.768849862506305,0.169945353302148,0.041379309276055]); hLegend.FontSize = 20; hLegend.Orientation = 'horizontal';
 box_vars = findall(gca,'Tag','Box');
 hLegend = legend(box_vars([4,3,2,1]), {'B1','B2','B3','B4'}); legend('boxoff')
-text(1.75,1.3,'k_{FS} = 0s^{-1}','FontSize',16)
-text(5.75,1.3,'k_{FS} = 4s^{-1}','FontSize',16)
-text(9.75,1.3,'k_{FS} = 8s^{-1}','FontSize',16)
-text(13.75,1.3,'k_{FS} = 12s^{-1}','FontSize',16)
-text(17.75,1.3,'k_{FS} = 16s^{-1}','FontSize',16)
-text(21.75,1.3,'k_{FS} = 20s^{-1}','FontSize',16)
+text(1.75,1.3,'k_{FS} = 0s^{-1}','FontSize',20)
+text(5.75,1.3,'k_{FS} = 4s^{-1}','FontSize',20)
+text(9.75,1.3,'k_{FS} = 8s^{-1}','FontSize',20)
+text(13.75,1.3,'k_{FS} = 12s^{-1}','FontSize',20)
+text(17.75,1.3,'k_{FS} = 16s^{-1}','FontSize',20)
+text(21.75,1.3,'k_{FS} = 20s^{-1}','FontSize',20)
+title('Monte Carlo Simulations - Data Including Exchange and Model Excluding Exchange','FontSize',22,'FontWeight','Bold');
 
 subplot(2,1,2)
 area([0 4.5],[2 2],'FaceAlpha',0.2,'EdgeAlpha',0.2,'FaceColor','k','EdgeColor','k'); hold on
@@ -43,17 +44,15 @@ BP2 = boxplot(Solution_2,OnesVector,'Colors',cm,'Symbol','','Labels',Labels);
 for ih=1:7
     set(BP2(ih,:),'LineWidth',2);
 end
-ylabel('T_{1F} (s)','FontSize',16); hline(T1_F,'k--');
+ylabel('T_{1F} (s)','FontSize',20); hline(T1_F,'k--');
 xticks([]); xticklabels({})
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16); grid on; grid minor;
-text(1.75,0.65,'k_{FS} = 0s^{-1}','FontSize',16)
-text(5.75,0.65,'k_{FS} = 4s^{-1}','FontSize',16)
-text(9.75,0.65,'k_{FS} = 8s^{-1}','FontSize',16)
-text(13.75,0.65,'k_{FS} = 12s^{-1}','FontSize',16)
-text(17.75,0.65,'k_{FS} = 16s^{-1}','FontSize',16)
-text(21.75,0.65,'k_{FS} = 20s^{-1}','FontSize',16)
-
-sgt = mtit('Monte Carlo Simulations - Data Including Exchange and Model Excluding Exchange','FontSize',20);
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20); grid on; grid minor;
+text(1.75,0.65,'k_{FS} = 0s^{-1}','FontSize',20)
+text(5.75,0.65,'k_{FS} = 4s^{-1}','FontSize',20)
+text(9.75,0.65,'k_{FS} = 8s^{-1}','FontSize',20)
+text(13.75,0.65,'k_{FS} = 12s^{-1}','FontSize',20)
+text(17.75,0.65,'k_{FS} = 16s^{-1}','FontSize',20)
+text(21.75,0.65,'k_{FS} = 20s^{-1}','FontSize',20)
 
 figure(2); subplot(2,1,1)
 area([0 4.5],[2 2],'FaceAlpha',0.2,'EdgeAlpha',0.2,'FaceColor','k','EdgeColor','k'); hold on
@@ -63,15 +62,15 @@ BP3 = boxplot(Solution_3,OnesVector,'Colors',cm,'Symbol','','Labels',Labels);
 for ih=1:7
     set(BP3(ih,:),'LineWidth',2);
 end
-ylabel('T_{2S} (s)','FontSize',16); hline(T2_S,'k--');
+ylabel('T_{2S} (s)','FontSize',20); hline(T2_S,'k--');
 xticks([]); xticklabels({})
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16); grid on; grid minor;
-text(1.75,0.105,'k_{FS} = 0s^{-1}','FontSize',16)
-text(5.75,0.105,'k_{FS} = 4s^{-1}','FontSize',16)
-text(9.75,0.105,'k_{FS} = 8s^{-1}','FontSize',16)
-text(13.75,0.105,'k_{FS} = 12s^{-1}','FontSize',16)
-text(17.75,0.105,'k_{FS} = 16s^{-1}','FontSize',16)
-text(21.75,0.105,'k_{FS} = 20s^{-1}','FontSize',16)
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20); grid on; grid minor;
+text(1.75,0.065,'k_{FS} = 0s^{-1}','FontSize',20)
+text(5.75,0.065,'k_{FS} = 4s^{-1}','FontSize',20)
+text(9.75,0.065,'k_{FS} = 8s^{-1}','FontSize',20)
+text(13.75,0.065,'k_{FS} = 12s^{-1}','FontSize',20)
+text(17.75,0.065,'k_{FS} = 16s^{-1}','FontSize',20)
+text(21.75,0.065,'k_{FS} = 20s^{-1}','FontSize',20)
 
 subplot(2,1,2)
 area([0 4.5],[2 2],'FaceAlpha',0.2,'EdgeAlpha',0.2,'FaceColor','k','EdgeColor','k'); hold on
@@ -82,14 +81,14 @@ xticks([]); xticklabels({})
 for ih=1:7
     set(BP4(ih,:),'LineWidth',2);
 end
-ylabel('T_{2F} (s)','FontSize',16); hline(T2_F,'k--'); ylim([0 0.05])
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16); grid on; grid minor;
-text(1.75,0.045,'k_{FS} = 0s^{-1}','FontSize',16)
-text(5.75,0.045,'k_{FS} = 4s^{-1}','FontSize',16)
-text(9.75,0.045,'k_{FS} = 8s^{-1}','FontSize',16)
-text(13.75,0.045,'k_{FS} = 12s^{-1}','FontSize',16)
-text(17.75,0.045,'k_{FS} = 16s^{-1}','FontSize',16)
-text(21.75,0.045,'k_{FS} = 20s^{-1}','FontSize',16)
+ylabel('T_{2F} (s)','FontSize',20); hline(T2_F,'k--'); ylim([0 0.05])
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20); grid on; grid minor;
+text(1.75,0.045,'k_{FS} = 0s^{-1}','FontSize',20)
+text(5.75,0.045,'k_{FS} = 4s^{-1}','FontSize',20)
+text(9.75,0.045,'k_{FS} = 8s^{-1}','FontSize',20)
+text(13.75,0.045,'k_{FS} = 12s^{-1}','FontSize',20)
+text(17.75,0.045,'k_{FS} = 16s^{-1}','FontSize',20)
+text(21.75,0.045,'k_{FS} = 20s^{-1}','FontSize',20)
 
 figure(3); subplot(2,1,1)
 area([0 4.5],[2 2],'FaceAlpha',0.2,'EdgeAlpha',0.2,'FaceColor','k','EdgeColor','k'); hold on
@@ -99,12 +98,12 @@ BP5 = boxplot(Solution_5,OnesVector,'Colors',cm,'Symbol','','Labels',Labels);
 for ih=1:7
     set(BP5(ih,:),'LineWidth',2);
 end
-ylabel('MWF','FontSize',16); hline(M0_F,'k--');
+ylabel('MWF','FontSize',20); hline(M0_F,'k--');
 xticks([]); xticklabels({})
-get(gca, 'XTick'); set(gca, 'FontSize', 16); get(gca, 'YTick'); set(gca, 'FontSize', 16); grid on; grid minor;
-text(1.75,0.45,'k_{FS} = 0s^{-1}','FontSize',16)
-text(5.75,0.45,'k_{FS} = 4s^{-1}','FontSize',16)
-text(9.75,0.45,'k_{FS} = 8s^{-1}','FontSize',16)
-text(13.75,0.45,'k_{FS} = 12s^{-1}','FontSize',16)
-text(17.75,0.45,'k_{FS} = 16s^{-1}','FontSize',16)
-text(21.75,0.45,'k_{FS} = 20s^{-1}','FontSize',16)
+get(gca, 'XTick'); set(gca, 'FontSize', 20); get(gca, 'YTick'); set(gca, 'FontSize', 20); grid on; grid minor;
+text(1.75,0.45,'k_{FS} = 0s^{-1}','FontSize',20)
+text(5.75,0.45,'k_{FS} = 4s^{-1}','FontSize',20)
+text(9.75,0.45,'k_{FS} = 8s^{-1}','FontSize',20)
+text(13.75,0.45,'k_{FS} = 12s^{-1}','FontSize',20)
+text(17.75,0.45,'k_{FS} = 16s^{-1}','FontSize',20)
+text(21.75,0.45,'k_{FS} = 20s^{-1}','FontSize',20)

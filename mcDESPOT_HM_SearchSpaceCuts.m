@@ -1,5 +1,5 @@
 %%% Generates search space cuts either at SRC solution point or
-%%% ground-truth for Figures 3, 4 and SF3. %%%
+%%% ground-truth for Figures 3, 4 and SF 3. %%%
 
 close all; clear all;
 
