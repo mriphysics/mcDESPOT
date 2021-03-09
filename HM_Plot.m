@@ -192,7 +192,7 @@ for rr = 1:length(T1S_LB)
     rectangle('Position',[T2F_LB(rr) M0F_LB(rr) (T2F_UB(rr)-T2F_LB(rr)) (M0F_UB(rr)-M0F_LB(rr))],'EdgeColor',[0.5 0.5 0.5],'LineWidth',1)
 end
 get(gca, 'XTick'); set(gca, 'FontSize', 18); get(gca, 'YTick'); set(gca, 'FontSize', 18);
-plot(T2_F,M0_F,'.','Color',PointC, 'MarkerSize', 2);
+plot(T2_F,M0_F,'.','Color',PointC, 'MarkerSize', 22);
 
 subplot(3,6,18); %MaxCF_T2S_SRC = max(exp(P_T2S_SRC),[],3);
 imagesc([min(T2S_Vector) max(T2S_Vector)],[min(M0F_Vector) max(M0F_Vector)],(MaxCF_T2S_SRC_NoiseInd),col_axis); colormap(flipud(magma)); colorbar; shading interp; xlabel('T_{2S} (s)','FontSize',20); ylabel('MWF','FontSize',20); hold on;
